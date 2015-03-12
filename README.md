@@ -13,10 +13,11 @@ This project attempts to ease the configuration and installation of the [Unhango
 
 ## Installation
 
-See INSTALL.md
+See [INSTALL.md](INSTALL.md)
 
 ## Caveats
 
- * Tested on recent versions of OS X/Vagrant/Virtualbox and CentOS 6.x
- * Salt installation should work on RHEL/CentOS and similar variants, versions 5.x and 6.x
+ * Tested on recent versions of [OS X](https://www.apple.com/osx)/[Vagrant](https://www.vagrantup.com)/[VirtualBox](https://www.virtualbox.org) and [CentOS](http://www.centos.org) 6.x
+ * Salt installation should work on [RHEL](http://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)/[CentOS](http://www.centos.org) and similar variants, versions 5.x and 6.x
  * No support for installation on other platforms, but they could be added fairly easily, I think. Patches welcome. :)
+ * No [Windows](http://windows.microsoft.com) support yet.
