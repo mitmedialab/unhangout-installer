@@ -1,0 +1,20 @@
+# Temp files.
+.DS_Store
+._*
+*~
+*.swp
+.vim
+
+# Config files.
+salt/pillar/server/common.sls
+salt/pillar/server/development.sls
+salt/pillar/server/production.sls
+vagrant/settings.sh
+
+# All custom Nginx config files.
+salt/salt/etc/nginx/conf.d/*.conf.jinja
+
+# All custom SSL files.
+salt/salt/service/unhangout/ssl/*.crt
+salt/salt/service/unhangout/ssl/*.key
+
