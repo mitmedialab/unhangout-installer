@@ -4,8 +4,9 @@
 # to customize any of the listed installation variables. Default values are
 # shown in the commented out lines.
 
-# Directory where the Vagrantfile and (possibly) salt minion configuration
-# files live.
+# Directory where the Vagrantfile and development deployment scripts live. It
+# will be auto-configured by the deployment script, and is included here only
+# for reference.
 #VAGRANT_CONFIG_DIR=
 
 # Install path for the virtual machine. Make sure that the user executing the
