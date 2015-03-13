@@ -7,7 +7,7 @@ DEV_SERVER=
 SSH_CONFIG_LABEL="unhangout"
 PORTS_TO_CHECK="2222 7778 8080"
 MESSAGE_STORE=""
-VM_INSTALL_DIR="~/vagrant/unhangout"
+VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
 
 find_full_path_to_file() {
   local CWD=`pwd`
@@ -59,7 +59,7 @@ if [ -n "$DEV_USER" ]; then
   if [ $? -ne 0 ]; then
     add_message "Test for SSH access for ${DEV_USERNAME}@${DEV_SERVER} failed. Make
   sure you have a user account there, and the proper config in your
-  ~/.ssh/config file."
+  ${HOME}/.ssh/config file."
   fi
 
   echo "Checking for valid Salt config..."

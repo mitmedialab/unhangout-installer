@@ -11,7 +11,7 @@
 
 # Install path for the virtual machine. Make sure that the user executing the
 # installation script has permissions to create this directory.
-#VM_INSTALL_DIR="~/vagrant/unhangout"
+#VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
 
 # Directory where the salt and pillar file roots are located. This is auto
 # configured by the deployement script, so unless you're doing something

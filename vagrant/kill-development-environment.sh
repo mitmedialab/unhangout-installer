@@ -3,7 +3,7 @@
 # Removes all files associated with the development environment, use with
 # extreme caution!
 
-VM_INSTALL_DIR="~/vagrant/unhangout"
+VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
 
 find_full_path_to_file() {
   local CWD=`pwd`
