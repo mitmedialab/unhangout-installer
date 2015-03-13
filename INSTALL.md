@@ -11,7 +11,7 @@ Installation is fairly straightforward:
  * In the <code>salt/pillar/server</code> directory, you'll find three example configuration files: one for development, one for production, and one for common settings across environments.
  * Copy the relevant example files in the same directory, removing the .example extension (eg. <code>development.sls.example</code> becomes <code>development.sls</code>).
  * Edit the configurations to taste. You can reference salt/salt/vars.jinja to see what variables are available, and the defaults for each.
- * An SSL .crt and .key file matching the value of the <code>unhangout_domain</code> variable must be dropped into the <code>salt/salt/service/unhangout/ssl</code> directory, in the form of <code>[unhangout_domain].crt</code> and <code>[unhangout_domain].key</code>. Dummy .crt and .key files have been provided for localhost, to ease the deployment of development environments.
+ * An SSL .crt and .key file matching the value of the <code>unhangout_domain</code> variable must be dropped into the <code>salt/salt/service/unhangout/ssl</code> directory, in the form of <code>[unhangout_domain].crt</code> and <code>[unhangout_domain].key</code>. Dummy .crt and .key files have been provided for localhost (the default value for <code>unhangout_domain</code>), to ease the deployment of development environments.
  * It's highly recommended to provide SSH public keys for those users you wish to have root access to the server. See the example configurations.
  * It's also possible to provide some other customizations for the Nginx portion of the install, but it's not necessary. See salt/salt/vars.jinja for more details.
 
@@ -39,4 +39,5 @@ Installation is fairly straightforward:
 
  * On all environments, the Unhangout code base is installed at <code>/usr/local/node/unhangout</code>, and start/stop/restart of the server can be managed by the script installed at <code>/etc/init.d/unhangout</code>.
  * On production environments, all essential services are monitored via monit, and start/stop/restart of the services should be handled via [monit commands](http://mmonit.com/monit/documentation/monit.html#Arguments).
+ * On Vagrant installations, the unhangout codebase can also be accessed directly from the host machine, in the <code>unhangout</code> directory inside the <code>VM_INSTALL_DIR</code> directory specified in <code>settings.sh</code>. This enables use of your favorite editor instead of the more limited options on the virtual machine.
  * The unhangout code base is a git clone, and git is installed and ready to use with it.
