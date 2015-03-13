@@ -39,8 +39,12 @@ mkdir -p ${VM_INSTALL_DIR}
 echo "Setting up Vagrant configuration for server..."
 cd $VM_INSTALL_DIR
 cp ${VAGRANT_CONFIG_DIR}/Vagrantfile .
+# This is the directory that will sync with the VM's unhangout codebase.
+mkdir unhangout
 # Cross-platform trick for sed inline editing.
 sed -i.bak "s%###SALT_DIR###%${SALT_DIR}%g" Vagrantfile
+rm Vagrantfile.bak
+sed -i.bak "s%###VM_INSTALL_DIR###%${VM_INSTALL_DIR}%g" Vagrantfile
 rm Vagrantfile.bak
 # TODO: Automate location of salt files in Vagrantfile
 if [ -n "$DEV_SERVER" ]; then
@@ -68,6 +72,13 @@ vagrant plugin install vagrant-vbguest
 # the rest of the install.
 echo "Provisioning server..."
 vagrant reload --provision
+
+# Enable the synced folder to the unhangout installation. This is a hack, as
+# there's no way to tell Vagrant to mount a synced folder only after
+# provisioning is complete.
+# See https://github.com/mitchellh/vagrant/issues/936
+sed -i.bak "s/#config.vm.synced_folder/config.vm.synced_folder/g" Vagrantfile
+rm Vagrantfile.bak
 
 # Final reboot takes care of resetting SELinux, making sure all services
 # come up on boot, etc.
