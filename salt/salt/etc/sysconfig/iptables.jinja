@@ -1,0 +1,88 @@
+{% set spoof_ips = ["127.0.0.0/8", "172.16.0.0/12", "10.0.0.0/8", "169.254.0.0/16", "0.0.0.0/8", "240.0.0.0/4", "255.255.255.255/32", "168.254.0.0/16", "224.0.0.0/4", "240.0.0.0/5", "248.0.0.0/5", "192.0.2.0/24"] -%}
+
+*raw
+
+:PREROUTING ACCEPT
+:OUTPUT ACCEPT
+
+# Don't track anything on the local interface.
+-A PREROUTING -i lo -j NOTRACK
+-A OUTPUT -o lo -j NOTRACK
+
+{% if raw_tcp_ports|length > 0 -%}
+# Don't track these TCP ports.
+{% for port in raw_tcp_ports -%}
+-A PREROUTING -p tcp -m tcp --dport {{ port }} -j NOTRACK
+-A OUTPUT -p tcp -m tcp --sport {{ port }} -j NOTRACK
+{% endfor -%}
+{% endif -%}
+
+{% if raw_udp_ports|length > 0 -%}
+# Don't track these UDP ports.
+{% for port in raw_udp_ports -%}
+-A PREROUTING -p udp -m udp --dport {{ port }} -j NOTRACK
+-A OUTPUT -p udp -m udp --sport {{ port }} -j NOTRACK
+{% endfor -%}
+{%- endif %}
+COMMIT
+
+*filter
+
+# Drop any traffic not explicitly allowed in the rules below.
+:INPUT DROP
+:FORWARD DROP
+:OUTPUT ACCEPT
+
+# Allow all loopback (lo0) traffic, and drop all traffic to 127/8 that doesn't
+# use lo0.
+-A INPUT -i lo -j ACCEPT
+-A INPUT ! -i lo -d 127.0.0.0/8 -j DROP
+
+{% if public_interface -%}
+# Prevent spoofing of private network addresses on the public interface.
+{% for range in spoof_ips -%}
+-A INPUT -s {{ range }} -i {{ public_interface }} -m limit --limit 5/min --limit-burst 7 -j LOG
+-A INPUT -s {{ range }} -i {{ public_interface }} -j DROP
+{% endfor -%}
+{% endif -%}
+
+# Accept inbound traffic for already established connections.
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# Allow SSH connections.
+-A INPUT -p tcp -m state --state NEW -m tcp --dport {{ sshd_port }} -j ACCEPT
+
+{% if filter_tcp_ports|length > 0 -%}
+# Allow other TCP service connections as configured.
+{% for port in filter_tcp_ports -%}
+{% if port in raw_tcp_ports -%}
+-A INPUT -p tcp -m tcp --dport {{ port }} -j ACCEPT
+{% else -%}
+-A INPUT -p tcp -m tcp --dport {{ port }} -j ACCEPT -m state --state NEW
+{% endif -%}
+{% endfor -%}
+{% endif -%}
+
+{% if filter_udp_ports|length > 0 -%}
+# Allow other UDP service connections as configured.
+{% for port in filter_udp_ports -%}
+{% if port in raw_udp_ports -%}
+-A INPUT -p udp -m udp --dport {{ port }} -j ACCEPT
+{% else -%}
+-A INPUT -p udp -m udp --dport {{ port }} -j ACCEPT -m state --state NEW
+{% endif -%}
+{% endfor -%}
+{%- endif %}
+
+# Allow certain ICMP packets.
+-A INPUT -p icmp -m state --state NEW,RELATED,ESTABLISHED -m limit --limit 30/sec -m icmp --icmp-type 8 -j ACCEPT
+-A INPUT -p icmp -m limit --limit 30/sec -m icmp --icmp-type 3 -j ACCEPT
+-A INPUT -p icmp -m limit --limit 30/sec -m icmp --icmp-type 5 -j ACCEPT
+-A INPUT -p icmp -m limit --limit 30/sec -m icmp --icmp-type 11 -j ACCEPT
+
+-A INPUT -m limit --limit 5/min --limit-burst 7 -j LOG
+-A INPUT -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -m limit --limit 5/min --limit-burst 7 -j LOG
+-A FORWARD -j REJECT --reject-with icmp-port-unreachable
+
+COMMIT

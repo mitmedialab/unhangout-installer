@@ -1,0 +1,6 @@
+NETWORKING=yes
+HOSTNAME={{ server_id }}
+{% if server_env == 'development' %}
+# Inserted for Vagrant installs.
+RES_OPTIONS="single-request-reopen"
+{% endif %}

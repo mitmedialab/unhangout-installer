@@ -1,0 +1,12 @@
+# Example of a configuration for a custom domain.
+
+# Redirects the custom domain and someothersite.com to the unhangout domain.
+# Or perhaps this is where you would serve a brochure site which leads to the
+# unhangout site.
+
+server {
+  listen {{ nginx_http_port }};
+  server_name {{ nginx_custom_domain }} www.{{ nginx_custom_domain }} someothersite.com;
+  return 301 https://{{ unhangout_domain }}:{{ unhangout_https_port }}$request_uri;
+}
+

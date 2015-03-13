@@ -1,0 +1,127 @@
+#!/bin/bash
+#
+# chkconfig: 35 90 12
+# description: Start node apps.
+#
+
+# This grabs the name of the init script. The weird string match handles
+# the case when the init script is called on boot as /etc/rcN/S90[name].
+INIT_SCRIPT_BASENAME=`basename $0`
+SERVICE=${INIT_SCRIPT_BASENAME#S90}
+
+#############################################################################
+# CONFIGURATION BEGIN
+#############################################################################
+
+# These options can all be overridden in /etc/sysconfig/[name of init script]
+# eg., if your init script is /etc/init.d/foo, then /etc/sysconfig/foo.
+# This allows this one init script to be reused multiple times.
+
+# Full path to the app file you want to launch.
+APP=/full/path/to/app.js
+
+# Name of the file to log all console output from the node process. You
+# should be able to use /dev/null here if you just want to throw it away.
+LOGFILE=/full/path/to/log/file
+
+# Any arguments you want to pass to the app.
+APP_ARGS=""
+
+# Full path to the node executable. The 'which' program can usually locate
+# this for you, but you can also hard code this if necessary.
+NODE=`which node`
+
+# Setting for the NODE_ENV environment variable.
+NODE_ENV="development"
+
+# Name of pid/lock files -- these are sensible defaults.
+PIDFILE=/var/run/${SERVICE}.pid
+LOCKFILE=/var/lock/subsys/${SERVICE}
+
+# How many seconds to wait before checking if the node process has started
+# successfully.
+START_CHECK_DELAY=2
+STOP_TIMEOUT=10
+
+#############################################################################
+# CONFIGURATION BEGIN
+#############################################################################
+
+# Load the function library.
+. /etc/init.d/functions
+
+# Override defaults with custom settings.
+if [ -f /etc/sysconfig/${SERVICE} ]; then
+  . /etc/sysconfig/${SERVICE}
+fi
+
+RETVAL=0
+
+rh_status() {
+  status -p $PIDFILE $SERVICE
+}
+
+rh_status_quiet() {
+  rh_status >/dev/null 2>&1
+}
+
+
+start() {
+  echo -n "Starting ${SERVICE}: "
+  # Starts the node app as a background process.
+  NODE_ENV="${NODE_ENV}" nohup $NODE $APP $APP_ARGS >> $LOGFILE 2>&1 &
+  # $! is a special bash variable that contains the pid of the last run
+  # background process, which is our node app.
+  echo $! > $PIDFILE
+  # Wait a bit to make sure the app is started before trying to check its
+  # status.
+  sleep $START_CHECK_DELAY
+  rh_status_quiet
+  RETVAL=$?              
+  if [ $RETVAL = 0 ]; then
+    touch $LOCKFILE && success || failure
+  else
+    failure
+  fi
+  echo
+}
+
+stop() {
+  echo -n "Stopping ${SERVICE}: "
+  killproc -p $PIDFILE -d $STOP_TIMEOUT $SERVICE -INT
+  RETVAL=$?                    
+  if [ $RETVAL = 0 ]; then
+    rm -f $LOCKFILE && success || failure
+  else
+    failure
+  fi
+  echo
+}
+
+restart() {
+  stop
+  start
+}
+
+case "$1" in
+  start)
+    rh_status_quiet && exit 0
+    start
+    ;;
+  stop)
+    rh_status_quiet || exit 0
+    stop
+    ;;
+  status)
+    rh_status
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart}"
+    RETVAL=1
+esac
+
+exit $RETVAL
+

@@ -1,0 +1,29 @@
+# Example pillar file for a build of a local development server.
+#
+# Only required settings are listed here, the rest use the default values found
+# in salt/salt/vars.jinja, and can be overridden here.
+#
+# For more details on how to write pillar files, see:
+# http://docs.saltstack.com/en/latest/topics/pillar
+
+# Example development configuration.
+#service:
+#  unhangout:
+#    google:
+#      client_id: '7a68a65df865af8ds65fta8s76dftj@developer.gserviceaccount.com'
+#      client_secret: '97a6tdgfuagsdi76fgoa7dgf'
+#      # This project should work for localhost installs running on HTTPS port
+#      # 7778.
+#      project_id: '650862887364'
+
+
+# Add SSH public keys here for users you wish to have root access to the server.
+#ssh:
+#  pubkeys:
+#    root:
+#      foo@example.com:
+#        key: somesshpubkey
+#        # For details on this setting, see
+#        # http://docs.saltstack.com/en/latest/ref/states/all/salt.states.ssh_auth.html#salt.states.ssh_auth.present
+#        # Default is ssh-rsa.
+#        enc: ssh-rsa

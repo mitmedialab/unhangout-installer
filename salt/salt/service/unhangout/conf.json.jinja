@@ -1,0 +1,38 @@
+{
+    "UNHANGOUT_GOOGLE_CLIENT_ID": "{{ google_client_id }}",
+    "UNHANGOUT_GOOGLE_CLIENT_SECRET": "{{ google_client_secret }}",
+    "UNHANGOUT_SESSION_SECRET": "{{ unhangout_session_secret }}",
+    "UNHANGOUT_EVENTS_SPREADSHEET": "{{ google_spreadsheet_key }}",
+
+    "UNHANGOUT_PORT": {{ unhangout_https_port }},
+    "UNHANGOUT_HOST": "{{ unhangout_domain }}",
+
+    "UNHANGOUT_REDIS_HOST": "{{ redis_host }}",
+    "UNHANGOUT_REDIS_PORT": {{ redis_port }},
+    "UNHANGOUT_REDIS_DB": {{ redis_db }},
+
+    "UNHANGOUT_SMTP": {
+        "host": "localhost",
+        "port": "2525",
+        "secureConnection": false
+    },
+
+    "UNHANGOUT_SERVER_EMAIL_ADDRESS": "{{ unhangout_server_email_address }}",
+
+    "UNHANGOUT_SUPERUSER_EMAILS": {{ unhangout_superuser_emails|replace("'", '"') }},
+    "UNHANGOUT_MANAGERS": {{ unhangout_managers|replace("'", '"') }},
+
+    "UNHANGOUT_HANGOUT_APP_ID": {{ google_project_id }},
+    "UNHANGOUT_LOCALHOST_PORT": {{ unhangout_localhost_port }},
+    "UNHANGOUT_HANGOUT_ORIGIN_REGEX": "^https://[-a-z0-9]+hangout-opensocial.googleusercontent.com$",
+
+    "UNHANGOUT_USE_SSL": true,
+    "UNHANGOUT_REDIRECT_HTTP": false,
+    "UNHANGOUT_PRIVATE_KEY": "/usr/local/node/unhangout/ssl/{{ unhangout_domain }}.key",
+    "UNHANGOUT_CERTIFICATE": "/usr/local/node/unhangout/ssl/{{ unhangout_domain }}.crt",
+
+    "EMAIL_LOG_RECIPIENTS": {{ unhangout_email_log_recipients|replace("'", '"') }},
+    "TESTING_SELENIUM_PATH": "bin/selenium-server-standalone.jar",
+    "TESTING_SELENIUM_VERBOSE": false,
+    "TESTING_FIREFOX_BIN": null
+}

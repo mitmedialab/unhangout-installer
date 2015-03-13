@@ -1,0 +1,6 @@
+check process nginx with pidfile /var/run/nginx.pid
+  start program = "/etc/init.d/nginx start"
+  stop  program = "/etc/init.d/nginx stop"
+  if failed host 127.0.0.1 port {{ nginx_http_port }} then restart
+  if cpu > 60% for 5 cycles then restart
+  if 10 restarts within 10 cycles then timeout

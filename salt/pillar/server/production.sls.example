@@ -1,0 +1,50 @@
+# Example pillar file for a build of a production server.
+#
+# Defaults found in salt/salt/vars.jinja, and can be overridden here.
+#
+# For more details on how to write pillar files, see:
+# http://docs.saltstack.com/en/latest/topics/pillar
+
+# Example production configuration.
+#server:
+#  network:
+#    public_ip:
+#      interface: 'eth1'
+#  firewall:
+#    filter:
+#      tcp:
+#        - 80
+#        - 443
+
+#service:
+#  unhangout:
+#    google:
+#      client_id: '976ag9dfga97sd6f0asdgf0asdg6f.apps.googleusercontent.com'
+#      client_secret: '97a6gsd9gvas7dgf97as6dgf7a6gf'
+#      project_id: '178484982271'
+#    node_env: 'production'
+#    domain: 'unhangout.example.com'
+#    https_port: 443
+#    git:
+#      url: https://github.com/somegithubuser/unhangout.git
+#      branch: master
+#  nginx:
+#    # If this value is provided, further configuration is necessary. See
+#    # salt/vars.jinja for more info.
+#    custom_domain: 'example.com'
+#    http_port: 80
+#  sshd:
+#    port: 5000
+
+# Add SSH public keys here for users you wish to have root access to the server.
+#ssh:
+#  pubkeys:
+#    root:
+#      foo@example.com:
+#        key: somesshpubkey
+#        # For details on this setting, see
+#        # http://docs.saltstack.com/en/latest/ref/states/all/salt.states.ssh_auth.html#salt.states.ssh_auth.present
+#        # Default is ssh-rsa.
+#        enc: ssh-rsa
+#      bar@example.com:
+#        key: somesshpubkey

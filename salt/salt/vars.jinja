@@ -1,0 +1,72 @@
+# This file contains all variables that are referenced in other SLS files
+# which may be customized.
+#
+# NOTE: Do not customize the variables here! Do so in an appropriate pillar
+# or grain file, see Salt documentation for details: http://docs.saltstack.com
+
+# Server environment.
+{% set server_env = salt['grains.get']('server:env', 'development') %}
+
+# Unhangout configuration variables. Descriptions for most of these can be
+# found at
+# https://github.com/drewww/unhangout/blob/master/INSTALLATION.md#d-configuration
+{% set google_client_id = salt['pillar.get']('service:unhangout:google:client_id', '') -%}
+{% set google_client_secret = salt['pillar.get']('service:unhangout:google:client_secret', '') -%}
+{% set google_project_id = salt['pillar.get']('service:unhangout:google:project_id', '') -%}
+{% set google_spreadsheet_key = salt['pillar.get']('service:unhangout:google:spreadsheet_key', '... google spreadsheet key ...') -%}
+{% set unhangout_session_secret = salt['pillar.get']('service:unhangout:session_secret', 'sessionsecret') -%}
+{% set unhangout_server_email_address = salt['pillar.get']('service:unhangout:server_email_address', 'node@yourserver.example.com') -%}
+{% set unhangout_superuser_emails = salt['pillar.get']('service:unhangout:superuser_emails', []) -%}
+{% set unhangout_managers = salt['pillar.get']('service:unhangout:managers', []) -%}
+{% set unhangout_email_log_recipients = salt['pillar.get']('service:unhangout:email_log_recipients', []) -%}
+{% set unhangout_domain = salt['pillar.get']('service:unhangout:domain', 'localhost') -%}
+{% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', '7778') -%}
+{% set unhangout_localhost_port = salt['pillar.get']('service:unhangout:localhost_port', '7778') -%}
+
+# Unhangout server configuration.
+# The node.js environment to run under, can be one of 'testing', 'production'.
+{% set unhangout_node_env = salt['pillar.get']('service:unhangout:node_env', 'testing') -%}
+# Git URL for the unhangout checkout.
+{% set unhangout_git_url = salt['pillar.get']('service:unhangout:git:url', 'https://github.com/drewww/unhangout.git') -%}
+# Git branch for the unhangout checkout.
+{% set unhangout_git_branch = salt['pillar.get']('service:unhangout:git:branch', 'master') -%}
+
+# Network.
+# The server ID, set by the salt minion config file - must be edited there.
+{% set server_id = grains['id'] -%}
+# The interface name of the publicly accessible server interface (eg. 'eth0').
+# This can be set for production installs to allow extra firewall
+# configuration.
+{% set public_interface = salt['pillar.get']('server:network:public_ip:interface') -%}
+
+# SSH.
+# Port to run the SSH daemon on.
+{% set sshd_port = salt['pillar.get']('service:sshd:port', 22) -%}
+
+# Firewall.
+# TCP ports to open.
+{% set filter_tcp_ports = salt['pillar.get']('server:firewall:filter:tcp', ['8080', '7778']) -%}
+# UDP ports to open.
+{% set filter_udp_ports = salt['pillar.get']('server:firewall:filter:udp', []) -%}
+# TCP ports to skip connection tracking on.
+{% set raw_tcp_ports = salt['pillar.get']('server:firewall:raw:tcp', []) -%}
+# UDP ports to skip connection tracking on.
+{% set raw_udp_ports = salt['pillar.get']('server:firewall:raw:udp', []) -%}
+
+# Nginx.
+# HTTP port to listen on.
+{% set nginx_http_port = salt['pillar.get']('service:nginx:http_port', '8080') -%}
+# Setting this will look for a file named [nginx_custom_domain].conf.jinja in
+# salt/etc/nginx/conf.d, and configure /etc/nginx/conf.d/[nginx_custom_domain].conf
+# on the server. See salt/service/nginx/init.sls for details, and
+# salt/etc/nginx/conf.d/example.com.conf.jinja for an example configuration.
+{% set nginx_custom_domain = salt['pillar.get']('service:nginx:custom_domain') -%}
+
+# Redis.
+# URL of the database host.
+{% set redis_host = salt['pillar.get']('service:redis:host', '127.0.0.1') -%}
+# Port of the database host.
+{% set redis_port = salt['pillar.get']('service:redis:host', '6379') -%}
+# Database to write to on the database host.
+{% set redis_db = salt['pillar.get']('service:redis:db', '0') -%}
+
