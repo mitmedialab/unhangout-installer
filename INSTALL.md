@@ -33,7 +33,9 @@ Installation is fairly straightforward:
  * Make sure the server has access to the internet, including DNS resolution, and a valid, fully qualified host name configured.
  * Load the appropriate bootstrap script from the <code>server-bootstrap</code> directory (currently only <code>el.sh</code>) to the server, and make it executable.
  * Execute the bootstrap script. When prompted for the server environment, be sure to enter <code>production</code>.
- * Once the script completes successfully, follow the post-bootstrap instructions.
+ * Once the script completes successfully, follow the post-bootstrap instructions, with the following knowledge:
+   * 'salt configuration' refers to the <code>salt/salt</code> directory of this software
+   * 'pillar configuration' refers the <code>salt/pillar</code> directory of this software.
 
 ## Working on the installed code.
 
