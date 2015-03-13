@@ -47,9 +47,6 @@ grains:
     env: ${SERVER_ENV:-development}
 EOF
 
-log "Setting SELinux to permissive"
-sed -i -e "s/^SELINUX=.*/SELINUX=permissive/g" /etc/selinux/config
-
 echo
 echo "Basic configuration complete.
 
