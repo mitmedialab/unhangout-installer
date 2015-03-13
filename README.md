@@ -1,6 +1,6 @@
 # Overview
 
-This project attempts to ease the configuration and installation of the [Unhangout](https://unhangout.media.mit.edu) online un-conference style conferencing software. After running the installation, users should have a fully-functioning [Unhangout codebase](https://github.com/drewww/unhangout) up and running on their server.
+This project attempts to ease the installation and configuration of the [Unhangout](https://unhangout.media.mit.edu) online un-conference style conferencing software. After running the installation, users should have a fully-functioning [Unhangout codebase](https://github.com/drewww/unhangout) up and running on their server.
 
 ## Features
 
