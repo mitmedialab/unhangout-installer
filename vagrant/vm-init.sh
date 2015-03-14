@@ -5,6 +5,7 @@ VM_INSTALL_DIR=$2
 DEV_USER=$3
 DEV_SERVER=$4
 SALT_DIR="`dirname $VAGRANT_CONFIG_DIR`/salt"
+VM_NODE_PROJECT_DIR="/usr/local/node"
 
 if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
   . ${VAGRANT_CONFIG_DIR}/settings.sh
@@ -61,17 +62,16 @@ vagrant plugin uninstall vagrant-vbguest
 echo "Booting server..."
 vagrant up --no-provision
 
-# This is necessary so that the vagrant-vbguest pluging can be properly
+# This is necessary so that the vagrant-vbguest plugin can be properly
 # installed.
 echo "Updating server kernel..."
-vagrant ssh -- sudo yum -y update kernel*
+vagrant ssh -- "sudo yum -y update kernel*"
 
-vagrant plugin install vagrant-vbguest
-
-# Reloading here allows the vagrant-vbguest plugin to handle its job before
-# the rest of the install.
-echo "Provisioning server..."
-vagrant reload --provision
+# If a shared folder is created first, then filled, it will sync back to the
+# host. Creating the directory manually before salt provisioning allows the
+# shared folder to be properly populated on the host.
+echo "Pre-installing node code directory..."
+vagrant ssh -- "sudo mkdir -p $VM_NODE_PROJECT_DIR"
 
 # Enable the synced folder to the unhangout installation. This is a hack, as
 # there's no way to tell Vagrant to mount a synced folder only after
@@ -79,6 +79,13 @@ vagrant reload --provision
 # See https://github.com/mitchellh/vagrant/issues/936
 sed -i.bak "s/#config.vm.synced_folder/config.vm.synced_folder/g" Vagrantfile
 rm Vagrantfile.bak
+
+vagrant plugin install vagrant-vbguest
+
+# Reloading here allows the vagrant-vbguest plugin to handle its job before
+# the rest of the install.
+echo "Provisioning server..."
+vagrant reload --provision
 
 # Final reboot takes care of resetting SELinux, making sure all services
 # come up on boot, etc.
