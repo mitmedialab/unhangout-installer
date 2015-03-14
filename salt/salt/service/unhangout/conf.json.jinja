@@ -28,8 +28,8 @@
 
     "UNHANGOUT_USE_SSL": true,
     "UNHANGOUT_REDIRECT_HTTP": false,
-    "UNHANGOUT_PRIVATE_KEY": "/usr/local/node/unhangout/ssl/{{ unhangout_domain }}.key",
-    "UNHANGOUT_CERTIFICATE": "/usr/local/node/unhangout/ssl/{{ unhangout_domain }}.crt",
+    "UNHANGOUT_PRIVATE_KEY": "/etc/pki/tls/private/{{ unhangout_domain }}.key",
+    "UNHANGOUT_CERTIFICATE": "/etc/pki/tls/certs/{{ unhangout_domain }}.crt",
 
     "EMAIL_LOG_RECIPIENTS": {{ unhangout_email_log_recipients|replace("'", '"') }},
     "TESTING_SELENIUM_PATH": "bin/selenium-server-standalone.jar",
