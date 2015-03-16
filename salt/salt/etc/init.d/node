@@ -31,6 +31,9 @@ APP_ARGS=""
 # this for you, but you can also hard code this if necessary.
 NODE=`which node`
 
+# User to run the process as.
+NODE_USER="node"
+
 # Setting for the NODE_ENV environment variable.
 NODE_ENV="development"
 
@@ -40,15 +43,17 @@ LOCKFILE=/var/lock/subsys/${SERVICE}
 
 # How many seconds to wait before checking if the node process has started
 # successfully.
-START_CHECK_DELAY=2
+START_CHECK_LOOPS=5
 STOP_TIMEOUT=10
 
 #############################################################################
-# CONFIGURATION BEGIN
+# CONFIGURATION END
 #############################################################################
 
+DAEMON_ARGS="--check $SERVICE --pidfile $PIDFILE"
+
 # Load the function library.
-. /etc/init.d/functions
+ . /etc/init.d/functions
 
 # Override defaults with custom settings.
 if [ -f /etc/sysconfig/${SERVICE} ]; then
@@ -65,21 +70,45 @@ rh_status_quiet() {
   rh_status >/dev/null 2>&1
 }
 
-
 start() {
-  echo -n "Starting ${SERVICE}: "
+  # Trim the whitespace from the command, needed for pgrep below
+  local NODE_COMMAND="$(echo -e "$NODE $APP $APP_ARGS" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+  if [ "$NODE_USER" != "root" ]; then
+    DAEMON_ARGS="$DAEMON_ARGS --user $NODE_USER"
+  fi
   # Starts the node app as a background process.
-  NODE_ENV="${NODE_ENV}" nohup $NODE $APP $APP_ARGS >> $LOGFILE 2>&1 &
-  # $! is a special bash variable that contains the pid of the last run
-  # background process, which is our node app.
-  echo $! > $PIDFILE
-  # Wait a bit to make sure the app is started before trying to check its
-  # status.
-  sleep $START_CHECK_DELAY
-  rh_status_quiet
-  RETVAL=$?              
-  if [ $RETVAL = 0 ]; then
-    touch $LOCKFILE && success || failure
+  echo -n "Starting ${SERVICE}: "
+  daemon $DAEMON_ARGS NODE_ENV="${NODE_ENV}" $NODE_COMMAND >> $LOGFILE 2>&1 &
+  # Writing the pidfile on behalf of the node process requires avoiding a race
+  # condition with the daemon call. Pausing here allows the call to complete
+  # before the pidfile is written.
+  sleep 1
+  # Also, unfortunately, the $! bash variable doesn't contain the proper pid
+  # needed. This strategy should be pretty safe, since running the same app
+  # with the same arguments using this init script doesn't make much sense.
+  # Certain special characters in $APP_ARGS might break this functionality, not
+  # tested extensively.
+  local pid=`pgrep -f -n "$NODE_COMMAND"`
+  if [ -n "$pid" ]; then
+    echo $pid > $PIDFILE
+    local count=1
+    while true; do
+      rh_status_quiet
+      RETVAL=$?
+      if [ $RETVAL -eq 0 ]; then
+        touch $LOCKFILE && success || failure
+        break
+      else
+        if [ $count -gt $START_CHECK_LOOPS ]; then
+          rm -f $PIDFILE
+          failure
+          break
+        else
+          ((count++))
+        fi
+      fi
+      sleep 1
+    done
   else
     failure
   fi
@@ -91,7 +120,7 @@ stop() {
   killproc -p $PIDFILE -d $STOP_TIMEOUT $SERVICE -INT
   RETVAL=$?                    
   if [ $RETVAL = 0 ]; then
-    rm -f $LOCKFILE && success || failure
+    cleanup && success || failure
   else
     failure
   fi
@@ -103,23 +132,32 @@ restart() {
   start
 }
 
+cleanup() {
+  rm -f $PIDFILE && rm -f $LOCKFILE
+  return $?
+}
+
 case "$1" in
   start)
     rh_status_quiet && exit 0
     start
     ;;
   stop)
-    rh_status_quiet || exit 0
-    stop
-    ;;
-  status)
-    rh_status
+    rh_status_quiet
+    if [ $? -eq 0 ]; then
+      stop
+    else
+      cleanup && exit 0
+    fi
     ;;
   restart)
     restart
     ;;
+  status)
+    rh_status
+    ;;
   *)
-    echo $"Usage: $0 {start|stop|restart}"
+    echo $"Usage: $0 {start|stop|restart|status}"
     RETVAL=1
 esac
 
