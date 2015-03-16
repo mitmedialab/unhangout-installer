@@ -74,7 +74,7 @@ unhangout-github:
     - user: root
 # Development machines can have more lax security standards, and having the
 # root user own this file completely aids in Vagrant installs.
-{% if server_env = 'development' %}
+{% if server_env == 'development' %}
     - group: root
     - mode: 644
 {% else %}
@@ -92,7 +92,7 @@ unhangout-github:
     - user: root
 # Development machines can have more lax security standards, and having the
 # root user own this file completely aids in Vagrant installs.
-{% if server_env = 'development' %}
+{% if server_env == 'development' %}
     - group: root
     - mode: 644
 {% else %}
@@ -143,6 +143,7 @@ unhangout-compile-assets:
     - managed
     - template: jinja
     - context:
+      server_env: {{ server_env }}
       unhangout_node_env: {{ unhangout_node_env }}
     - source: salt://etc/sysconfig/node.jinja
     - user: root
