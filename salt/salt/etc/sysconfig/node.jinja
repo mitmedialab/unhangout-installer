@@ -1,3 +1,6 @@
 APP=/usr/local/node/unhangout/bin/unhangout-server
 LOGFILE=/var/log/node/unhangout/console.log
 NODE_ENV={{ unhangout_node_env }}
+{% if server_env == 'development' -%}
+NODE_USER="root"
+{% endif -%}
