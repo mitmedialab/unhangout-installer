@@ -11,7 +11,7 @@ Installation is fairly straightforward:
  * In the <code>salt/pillar/server</code> directory, you'll find three example configuration files: one for development, one for production, and one for common settings across environments.
  * Copy the relevant example files in the same directory, removing the .example extension (eg. <code>development.sls.example</code> becomes <code>development.sls</code>).
  * Edit the configurations to taste. You can reference salt/salt/vars.jinja to see what variables are available, and the defaults for each.
- * An SSL .crt and .key file matching the value of the <code>unhangout_domain</code> variable must be dropped into the <code>salt/salt/service/unhangout/ssl</code> directory, in the form of <code>[unhangout_domain].crt</code> and <code>[unhangout_domain].key</code>. Dummy .crt and .key files have been provided for localhost (the default value for <code>unhangout_domain</code>), to ease the deployment of development environments.
+ * If you wish to use custom SSL .crt and .key files, drop them into the <code>salt/salt/service/unhangout/ssl</code> directory, with a name matching the value of the <code>unhangout_domain</code> variable (in the form of <code>[unhangout_domain].crt</code> and <code>[unhangout_domain].key</code>). If no custom files are provided, dummy .crt and .key files will be used.
  * It's highly recommended to provide SSH public keys for those users you wish to have root access to the server. See the example configurations.
  * It's also possible to provide some other customizations for the Nginx portion of the install, but it's not necessary. See salt/salt/vars.jinja for more details.
 
