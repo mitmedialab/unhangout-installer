@@ -7,6 +7,6 @@
 server {
   listen {{ nginx_http_port }};
   server_name {{ nginx_custom_domain }} www.{{ nginx_custom_domain }} someothersite.com;
-  return 301 https://{{ unhangout_domain }}:{{ unhangout_https_port }}$request_uri;
+  return 301 https://{{ unhangout_domain }}:{{ nginx_https_port }}$request_uri;
 }
 

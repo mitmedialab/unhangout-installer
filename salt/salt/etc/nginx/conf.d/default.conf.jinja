@@ -1,5 +1,5 @@
 server {
   listen {{ nginx_http_port }};
   server_name {{ unhangout_domain }};
-  return 301 https://{{ unhangout_domain }}:{{ unhangout_https_port }}$request_uri;
+  return 301 https://{{ unhangout_domain }}:{{ nginx_https_port }}$request_uri;
 }

@@ -1,7 +1,8 @@
 include:
   - service.monit
 
-{% from 'vars.jinja' import unhangout_domain, unhangout_https_port, nginx_http_port, nginx_custom_domain with context %}
+{% from 'vars.jinja' import unhangout_domain, nat_https_port, unhangout_https_port, nginx_http_port, nginx_custom_domain with context %}
+{% set nginx_https_port = nat_https_port != unhangout_https_port and nat_https_port or unhangout_https_port %}
 
 nginx-package:
   pkg.installed:
@@ -13,8 +14,8 @@ nginx-package:
     - template: jinja
     - context:
       nginx_http_port: {{ nginx_http_port }}
+      nginx_https_port: {{ nginx_https_port }}
       unhangout_domain: {{ unhangout_domain }}
-      unhangout_https_port: {{ unhangout_https_port }}
     - source: salt://etc/nginx/conf.d/default.conf.jinja
     - user: root
     - group: root
@@ -29,8 +30,9 @@ nginx-package:
     - managed
     - template: jinja
     - context:
-      nginx_http_port: {{ nginx_http_port }}
       nginx_custom_domain: {{ nginx_custom_domain }}
+      nginx_http_port: {{ nginx_http_port }}
+      nginx_https_port: {{ nginx_https_port }}
       unhangout_domain: {{ unhangout_domain }}
       unhangout_https_port: {{ unhangout_https_port }}
     - source: salt://etc/nginx/conf.d/{{ nginx_custom_domain }}.conf.jinja
