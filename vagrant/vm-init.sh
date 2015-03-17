@@ -65,6 +65,7 @@ vagrant up --no-provision
 # This is necessary so that the vagrant-vbguest plugin can be properly
 # installed.
 echo "Updating server kernel..."
+vagrant ssh -- "sudo yum clean all"
 vagrant ssh -- "sudo yum -y update kernel*"
 
 # If a shared folder is created first, then filled, it will sync back to the
