@@ -1,5 +1,6 @@
 id: unhangout.local
 file_client: local
+state_auto_order: True
 
 file_roots:
   base:

@@ -33,6 +33,7 @@ log "Configuring minion file."
 cat > /etc/salt/minion << EOF
 id: $SERVER_HOSTNAME
 file_client: local
+state_auto_order: True
 
 file_roots:
   base:
