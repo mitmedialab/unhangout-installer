@@ -18,11 +18,11 @@ Installation is fairly straightforward:
 ## Development setup with Vagrant
 
  * Install the latest versions of [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org). OS X [Homebrew](http://brew.sh) users, consider easy installation via [Homebrew Cask](http://caskroom.io).
- * In the <code>vagrant</code> directory, you'll find <code>settings.sh.example</code>. Copy that file in the same directory to <code>settings.sh</code>.
+ * From the command line, change to the <code>vagrant</code> directory, and you'll find <code>settings.sh.example</code>. Copy that file in the same directory to <code>settings.sh</code>.
  * Edit to taste, the default values will most likely work just fine.
- * From the command line, execute <code>vagrant/development-environment-init.sh</code>.
+ * From the command line, run <code>./development-environment-init.sh</code>.
  * Once the script successfully completes the pre-flight checks, it will automatically handle the rest of the installation and setup. Relax, grab a cup of chai, and watch the setup process roll by on screen. :)
- * After script completion, run <code>vagrant/manage-vm.sh start</code>.
+ * After script completion, run <code>./manage-vm.sh start</code>.
  * Visit <code>https://localhost:7778</code> in your browser, and you should see the main page for the Unhangout software.
  * The setup script outputs optional configuration you can add to your .ssh/config file, to enable easy root SSH access to the server if you configured an SSH pubkey as above.
  * The installed virtual machine can be controlled like any other Vagrant VM. See [this Vagrant cheat sheet](http://notes.jerzygangi.com/vagrant-cheat-sheet) for more details. 
