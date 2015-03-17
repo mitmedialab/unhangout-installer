@@ -88,6 +88,11 @@ vagrant plugin install vagrant-vbguest
 echo "Provisioning server..."
 vagrant reload --provision
 
+# There is sometimes a slight delay in syncing files from the VM to a shared
+# host directory, allow time for it.
+echo "Waiting for $VM_NODE_PROJECT_DIR to sync to host..."
+sleep 60
+
 # Final reboot takes care of resetting SELinux, making sure all services
 # come up on boot, etc.
 echo "Rebooting server..."
