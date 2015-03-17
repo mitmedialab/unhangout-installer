@@ -180,8 +180,10 @@ unhangout-service:
   service:
     - running
     - name: unhangout
+{% if server_env == 'production' %}
     - enable: True
     - restart: True
+{% endif %}
     - watch:
       - pkg: nodejs
       - git: unhangout-github

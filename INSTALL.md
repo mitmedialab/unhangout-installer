@@ -22,9 +22,10 @@ Installation is fairly straightforward:
  * Edit to taste, the default values will most likely work just fine.
  * From the command line, execute <code>vagrant/development-environment-init.sh</code>.
  * Once the script successfully completes the pre-flight checks, it will automatically handle the rest of the installation and setup. Relax, grab a cup of chai, and watch the setup process roll by on screen. :)
- * After script completion, visit <code>https://localhost:7778</code> in your browser, and you should see the main page for the Unhangout software.
- * The setup script outputs optional configuration you can add to your .ssh/config file, to enable easy root SSH access to the server.
+ * The setup script outputs optional configuration you can add to your .ssh/config file, to enable easy root SSH access to the server if you configured an SSH pubkey as above.
  * The installed virtual machine can be controlled like any other Vagrant VM. See [this Vagrant cheat sheet](http://notes.jerzygangi.com/vagrant-cheat-sheet) for more details. 
+ * After script completion, SSH into the installed virtual machine, and as root run <code>service unhangout start</code>.
+ * Visit <code>https://localhost:7778</code> in your browser, and you should see the main page for the Unhangout software.
  * If for any reason the installation fails, or you just want to completely remove the installed virtual machine, run the <code>vagrant/kill-development-environment.sh</code> script from the command line.
 
 ## Production setup
