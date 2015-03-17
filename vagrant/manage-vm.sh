@@ -3,10 +3,12 @@
 # Convenience script for starting/stopping the virtual machine.
 
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
+
 SCRIPT_NAME=`basename $0`
 
 usage() {
-echo "This script smooths out the little inconsistencies in starting/stopping
+echo "
+This script smooths out the little inconsistencies in starting/stopping
 an Unhangout virtual server.
 
 Usage: $SCRIPT_NAME <start|stop|restart|status>
@@ -15,7 +17,6 @@ Usage: $SCRIPT_NAME <start|stop|restart|status>
   stop: Halts the running instance of the VM.
   restart: Restarts the VM.
   status: Displays the current status of the VM.
-
 "
 }
 

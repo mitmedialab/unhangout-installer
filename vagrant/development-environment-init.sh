@@ -1,13 +1,33 @@
 #!/bin/bash
 
-# This script handles all of the setup to build a fully functioning
-# development environment.
+# Handles the host layer of setting up an Unhangout development server.
 
 DEV_SERVER=
 SSH_CONFIG_LABEL="unhangout"
 PORTS_TO_CHECK="2222 7778 8080"
 MESSAGE_STORE=""
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
+
+SCRIPT_NAME=`basename $0`
+
+usage() {
+echo "
+This script handles all necessary host-level tasks necessary for
+installing a local Unhangout installation via Vagrant.
+
+Usage: $SCRIPT_NAME
+"
+}
+
+if [ "$1" = "help" ]; then
+  usage
+  exit 1
+fi
+
+if [ $# -ne 0 ]; then
+  usage
+  exit 1
+fi
 
 find_full_path_to_file() {
   local CWD=`pwd`

@@ -1,21 +1,22 @@
 #!/bin/bash
 
+# Handles all details of setting up the Unhangout virtual server using Salt.
+
 VAGRANT_CONFIG_DIR=$1
 VM_INSTALL_DIR=$2
 DEV_USER=$3
 DEV_SERVER=$4
-SALT_DIR="`dirname $VAGRANT_CONFIG_DIR`/salt"
+SALT_DIR="`dirname $VAGRANT_CONFIG_DIR 2> /dev/null`/salt"
 VM_NODE_PROJECT_DIR="/usr/local/node"
 
-if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
-  . ${VAGRANT_CONFIG_DIR}/settings.sh
-fi
+SCRIPT_NAME=`basename $0`
 
 usage() {
-echo "This script initializes a fully functional development server on a
+echo "
+This script initializes a fully functional Unhangout server on a
 development machine.
 
-Usage vm-init.sh <vagrant_config_dir> <vm_install_dir> [dev_user] [dev_server]
+Usage: $SCRIPT_NAME <vagrant_config_dir> <vm_install_dir> [dev_user] [dev_server]
 
   vagrant_config_dir: The directory containing the Vagrantfile to use.
   vm_install_dir: The directory to install the VM in.
@@ -25,13 +26,21 @@ Usage vm-init.sh <vagrant_config_dir> <vm_install_dir> [dev_user] [dev_server]
 dev_user and dev_server are optional, if provided they will be used to download
 the Salt configuration. Otherwise, the Salt configuration will installed from
 [vagrant_config_dir]/salt if it is found there.
-
 "
 }
+
+if [ "$1" = "help" ]; then
+  usage
+  exit 1
+fi
 
 if [ $# -lt 2 ]; then
   usage
   exit 1
+fi
+
+if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
+  . ${VAGRANT_CONFIG_DIR}/settings.sh
 fi
 
 echo "Creating ${VM_INSTALL_DIR}..."

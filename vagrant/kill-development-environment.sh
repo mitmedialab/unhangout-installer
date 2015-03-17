@@ -5,6 +5,27 @@
 
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
 
+SCRIPT_NAME=`basename $0`
+
+usage() {
+echo "
+This script handles all necessary host-level tasks necessary for
+completely removing a local Unhangout installation via Vagrant.
+
+Usage: $SCRIPT_NAME
+"
+}
+
+if [ "$1" = "help" ]; then
+  usage
+  exit 1
+fi
+
+if [ $# -ne 0 ]; then
+  usage
+  exit 1
+fi
+
 find_full_path_to_file() {
   local CWD=`pwd`
   local DIR=`dirname $0`
