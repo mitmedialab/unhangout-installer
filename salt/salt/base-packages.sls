@@ -20,6 +20,7 @@ base-packages:
       - patch
       - patchutils
       - postfix
+      - sed
       - system-config-firewall-tui
       - tcpdump
       - telnet
