@@ -119,8 +119,6 @@ echo "All pre-flight checks passed"
 echo "Initializing development server install..."
 ${VAGRANT_CONFIG_DIR}/vm-init.sh "$VAGRANT_CONFIG_DIR" "$VM_INSTALL_DIR" "$DEV_USERNAME" "$DEV_SERVER"
 
-vagrant plugin install vagrant-hostsupdater
-
 if [ -z "$MESSAGE_STORE" ]; then
   echo
   echo "Deployment successful."
