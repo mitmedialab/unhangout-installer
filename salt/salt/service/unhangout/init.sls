@@ -50,6 +50,30 @@ unhangout-github:
     - require:
       - file: /usr/local/node/unhangout
 
+# This directory is created up front so the production node user can write to
+# it.
+/usr/local/node/unhangout/public/logs/chat:
+  file.directory:
+# Development machines can have more lax security standards, and having the
+# root user own this file completely aids in Vagrant installs.
+{% if server_env == 'development' %}
+    - user: root
+    - group: root
+    - mode: 755
+{% else %}
+    - user: node
+    - group: node
+    - mode: 750
+{% endif %}
+    - makedirs: True
+    - recurse:
+      - user
+      - group
+      - mode
+    - require:
+      - group: node-group
+      - git: unhangout-github
+
 /usr/local/node/unhangout/conf.json:
   file:
     - managed
