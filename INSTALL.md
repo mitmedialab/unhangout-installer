@@ -44,3 +44,8 @@ Installation is fairly straightforward:
  * On production environments, all essential services are monitored via monit, and start/stop/restart of the services should be handled via [monit commands](http://mmonit.com/monit/documentation/monit.html#Arguments).
  * On Vagrant installations, the unhangout codebase can also be accessed directly from the host machine, in the <code>unhangout</code> directory inside the <code>VM_INSTALL_DIR</code> directory specified in <code>settings.sh</code>. This enables use of your favorite editor instead of the more limited options on the virtual machine.
  * The unhangout code base is a git clone, and git is installed and ready to use with it.
+
+## Known issues
+
+ * Vagrant installations using <code>vagrant/development-environment-init.sh</code> have a glitch where the Unhangout service doesn't have access to the files on the host machine until after boot. Each time the VM is rebooted, you must log into the server and run <code>service unhangout start</code> to activate the Unhangout node service.
+ * Production installations fail to start the Unhangout service and its Monit monitoring after the initial Salt deployment. Running <code>service unhangout start</code>, followed by <code>monit start unhangout</code> fixes the issue. Subsequent server reboots do not have this issue.
