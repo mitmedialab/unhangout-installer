@@ -1,4 +1,4 @@
-{% from 'vars.jinja' import public_interface, sshd_port, filter_tcp_ports, filter_udp_ports, raw_tcp_ports, raw_udp_ports with context %}
+{% from 'vars.jinja' import sshd_port, unhangout_https_port, nat_https_port, nginx_http_port with context %}
 
 iptables-package:
   pkg.installed:
@@ -9,12 +9,10 @@ iptables-package:
     - source: salt://etc/sysconfig/iptables.jinja
     - template: jinja
     - context:
-      filter_tcp_ports: {{ filter_tcp_ports }}
-      filter_udp_ports: {{ filter_udp_ports }}
-      raw_tcp_ports: {{ raw_tcp_ports }}
-      raw_udp_ports: {{ raw_udp_ports }}
       sshd_port: {{ sshd_port }}
-      public_interface: {{ public_interface }}
+      unhangout_https_port: {{ unhangout_https_port }}
+      nat_https_port: {{ nat_https_port }}
+      nginx_http_port: {{ nginx_http_port }}
     - user: root
     - group: root
     - mode: 755

@@ -34,24 +34,15 @@
 # Network.
 # The server ID, set by the salt minion config file - must be edited there.
 {% set server_id = grains['id'] -%}
-# The interface name of the publicly accessible server interface (eg. 'eth0').
-# This can be set for production installs to allow extra firewall
-# configuration.
-{% set public_interface = salt['pillar.get']('server:network:public_ip:interface') -%}
 
 # SSH.
 # Port to run the SSH daemon on.
 {% set sshd_port = salt['pillar.get']('service:sshd:port', 22) -%}
 
 # Firewall.
-# TCP ports to open.
-{% set filter_tcp_ports = salt['pillar.get']('server:firewall:filter:tcp', ['8080', '7778']) -%}
-# UDP ports to open.
-{% set filter_udp_ports = salt['pillar.get']('server:firewall:filter:udp', []) -%}
-# TCP ports to skip connection tracking on.
-{% set raw_tcp_ports = salt['pillar.get']('server:firewall:raw:tcp', []) -%}
-# UDP ports to skip connection tracking on.
-{% set raw_udp_ports = salt['pillar.get']('server:firewall:raw:udp', []) -%}
+# The publicly-accessible port for HTTPS connections.
+# If this is different than [unhangout_https_port], a forwarding rule will be set up.
+{% set nat_https_port = salt['pillar.get']('server:firewall:nat:https_port', '7778') -%}
 
 # Nginx.
 # HTTP port to listen on.

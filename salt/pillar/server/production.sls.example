@@ -7,14 +7,9 @@
 
 # Example production configuration.
 #server:
-#  network:
-#    public_ip:
-#      interface: 'eth1'
 #  firewall:
-#    filter:
-#      tcp:
-#        - 80
-#        - 443
+#    nat:
+#      https_port: 443
 
 #service:
 #  unhangout:
@@ -24,7 +19,6 @@
 #      project_id: '178484982271'
 #    node_env: 'production'
 #    domain: 'unhangout.example.com'
-#    https_port: 443
 #    git:
 #      url: https://github.com/somegithubuser/unhangout.git
 #      branch: master
