@@ -21,3 +21,7 @@ See [INSTALL.md](INSTALL.md)
  * Salt installation should work on [RHEL](http://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)/[CentOS](http://www.centos.org) and similar variants, versions 5.x and 6.x
  * No support for installation on other platforms, but they could be added fairly easily, I think. Patches welcome. :)
  * No [Windows](http://windows.microsoft.com) support yet for the [Vagrant](https://www.vagrantup.com) installation scripts.
+
+## Support
+
+The issue tracker for this project is provided to file bug reports, feature requests, and project tasks -- support requests are not accepted via the issue tracker. For all support-related issues, including configuration, usage, and training, consider hiring a competent consultant.
