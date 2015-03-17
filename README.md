@@ -19,6 +19,7 @@ See [INSTALL.md](INSTALL.md)
 
  * Tested on recent versions of [OS X](https://www.apple.com/osx)/[Vagrant](https://www.vagrantup.com)/[VirtualBox](https://www.virtualbox.org) and [CentOS](http://www.centos.org) 6.x
  * Salt installation should work on [RHEL](http://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)/[CentOS](http://www.centos.org) and similar variants, versions 5.x and 6.x
+ * Salt is currently configured to use a masterless setup. It should be pretty trivial to adjust the implementation for use with a master.
  * No support for installation on other platforms, but they could be added fairly easily, I think. Patches welcome. :)
  * No [Windows](http://windows.microsoft.com) support yet for the [Vagrant](https://www.vagrantup.com) installation scripts.
 
