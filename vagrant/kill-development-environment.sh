@@ -4,6 +4,7 @@
 # extreme caution!
 
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
+UNHANGOUT_GIT_DIR="${HOME}/git/unhangout"
 
 SCRIPT_NAME=`basename $0`
 
@@ -55,7 +56,12 @@ if [ -d $VM_INSTALL_DIR ]; then
     rm -rf $VM_INSTALL_DIR
 
     echo "Removal complete. DNS entries added to /etc/hosts will need
-  to be removed manually."
+to be removed manually."
+
+    if [ -d $UNHANGOUT_GIT_DIR ]; then
+      echo "$UNHANGOUT_GIT_DIR was preserved, and can be removed manually."
+    fi
+
   else
     echo "User cancelled"
   fi

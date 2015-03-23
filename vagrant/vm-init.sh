@@ -4,8 +4,9 @@
 
 VAGRANT_CONFIG_DIR=$1
 VM_INSTALL_DIR=$2
-DEV_USER=$3
-DEV_SERVER=$4
+UNHANGOUT_GIT_DIR=$3
+DEV_USER=$4
+DEV_SERVER=$5
 SALT_DIR="`dirname $VAGRANT_CONFIG_DIR 2> /dev/null`/salt"
 VM_NODE_PROJECT_DIR="/usr/local/node"
 
@@ -16,10 +17,11 @@ echo "
 This script initializes a fully functional Unhangout server on a
 development machine.
 
-Usage: $SCRIPT_NAME <vagrant_config_dir> <vm_install_dir> [dev_user] [dev_server]
+Usage: $SCRIPT_NAME <vagrant_config_dir> <vm_install_dir> <unhangout_git_dir> [dev_user] [dev_server]
 
   vagrant_config_dir: The directory containing the Vagrantfile to use.
   vm_install_dir: The directory to install the VM in.
+  unhangout_git_dir: Full path to the git clone of the unhangout repository.
   dev_user: The user name of the user on the main development server.
   dev_server: The SSH config name of the main development server.
 
@@ -54,9 +56,8 @@ mkdir unhangout
 # Cross-platform trick for sed inline editing.
 sed -i.bak "s%###SALT_DIR###%${SALT_DIR}%g" Vagrantfile
 rm Vagrantfile.bak
-sed -i.bak "s%###VM_INSTALL_DIR###%${VM_INSTALL_DIR}%g" Vagrantfile
+sed -i.bak "s%###UNHANGOUT_GIT_DIR###%${UNHANGOUT_GIT_DIR}%g" Vagrantfile
 rm Vagrantfile.bak
-# TODO: Automate location of salt files in Vagrantfile
 if [ -n "$DEV_SERVER" ]; then
   echo "Downloading salt config for dev user ${DEV_USER} from ${DEV_SERVER}..."
   rsync -avz --progress $DEV_SERVER:/home/${DEV_USER}/salt .
@@ -76,19 +77,6 @@ vagrant up --no-provision
 echo "Updating server kernel..."
 vagrant ssh -- "sudo yum clean all"
 vagrant ssh -- "sudo yum -y update kernel*"
-
-# If a shared folder is created first, then filled, it will sync back to the
-# host. Creating the directory manually before salt provisioning allows the
-# shared folder to be properly populated on the host.
-echo "Pre-installing node code directory..."
-vagrant ssh -- "sudo mkdir -p $VM_NODE_PROJECT_DIR"
-
-# Enable the synced folder to the unhangout installation. This is a hack, as
-# there's no way to tell Vagrant to mount a synced folder only after
-# provisioning is complete.
-# See https://github.com/mitchellh/vagrant/issues/936
-sed -i.bak "s/#config.vm.synced_folder/config.vm.synced_folder/g" Vagrantfile
-rm Vagrantfile.bak
 
 vagrant plugin install vagrant-vbguest
 

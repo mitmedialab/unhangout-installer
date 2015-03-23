@@ -6,6 +6,7 @@
 
 # Server environment.
 {% set server_env = salt['grains.get']('server:env', 'development') %}
+{% set server_type = salt['grains.get']('server:type', '') %}
 
 # Unhangout configuration variables. Descriptions for most of these can be
 # found at

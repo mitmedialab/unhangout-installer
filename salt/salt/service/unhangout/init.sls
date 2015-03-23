@@ -4,7 +4,7 @@ include:
   - service.redis
   - service.monit
 
-{% from 'vars.jinja' import server_env, google_client_id, google_client_secret, google_project_id, google_spreadsheet_key, unhangout_session_secret, unhangout_server_email_address, unhangout_superuser_emails, unhangout_managers, unhangout_email_log_recipients, unhangout_node_env, unhangout_domain, unhangout_https_port, unhangout_localhost_port, unhangout_git_url, unhangout_git_branch, redis_host, redis_port, redis_db with context -%}
+{% from 'vars.jinja' import server_env, server_type, google_client_id, google_client_secret, google_project_id, google_spreadsheet_key, unhangout_session_secret, unhangout_server_email_address, unhangout_superuser_emails, unhangout_managers, unhangout_email_log_recipients, unhangout_node_env, unhangout_domain, unhangout_https_port, unhangout_localhost_port, unhangout_git_url, unhangout_git_branch, redis_host, redis_port, redis_db with context -%}
 
 
 # Figure out if custom SSL files exist for install.
@@ -24,6 +24,12 @@ include:
 {% set ssl_domain = custom_ssl_files_exist and unhangout_domain or 'dummy' -%}
 # ssl_domain is {{ ssl_domain }}
 
+# Set up the dependency line for the Git checkout. This is necessary because on
+# Vagrant installs the checkout is an existing linked folder on the VM.
+{% set unhangout_git_checkout_dependency = server_type == 'vagrant' and 'file: /usr/local/node/unhangout' or 'git: unhangout-github' -%}
+# unhangout_git_checkout_dependency is {{ unhangout_git_checkout_dependency }}
+
+
 /usr/local/node/unhangout:
   file.directory:
     - user: root
@@ -42,6 +48,7 @@ include:
       - user: node-user
       - group: node-group
 
+{% if server_type != 'vagrant' -%}
 unhangout-github:
   git.latest:
     - name: {{ unhangout_git_url }}
@@ -49,6 +56,7 @@ unhangout-github:
     - target: /usr/local/node/unhangout
     - require:
       - file: /usr/local/node/unhangout
+{% endif -%}
 
 # This directory is created up front so the production node user can write to
 # it.
@@ -72,7 +80,7 @@ unhangout-github:
       - mode
     - require:
       - group: node-group
-      - git: unhangout-github
+      - {{ unhangout_git_checkout_dependency }}
 
 /usr/local/node/unhangout/conf.json:
   file:
@@ -107,7 +115,7 @@ unhangout-github:
 {% endif %}
     - require:
       - group: node-group
-      - git: unhangout-github
+      - {{ unhangout_git_checkout_dependency }}
 
 /etc/pki/tls/private/{{ unhangout_domain }}.key:
   file:
@@ -140,7 +148,7 @@ npm-bootstrap-unhangout:
     - require:
       - pkg: npm
     - watch:
-      - git: unhangout-github
+      - {{ unhangout_git_checkout_dependency }}
       - file: /usr/local/node/unhangout/conf.json
 
 unhangout-compile-assets:
@@ -148,7 +156,7 @@ unhangout-compile-assets:
     - name: bin/compile-assets.js
     - cwd: /usr/local/node/unhangout
     - watch:
-      - git: unhangout-github
+      - {{ unhangout_git_checkout_dependency }}
     - require:
       - npm: npm-bootstrap-unhangout
 
@@ -176,6 +184,7 @@ unhangout-compile-assets:
     - require:
       - cmd: unhangout-compile-assets
 
+{% if server_env == 'production' -%}
 unhangout-service:
   service:
     - running
@@ -184,7 +193,7 @@ unhangout-service:
     - restart: True
     - watch:
       - pkg: nodejs
-      - git: unhangout-github
+      - {{ unhangout_git_checkout_dependency }}
       - file: /usr/local/node/unhangout/conf.json
       - file: /etc/pki/tls/private/{{ unhangout_domain }}.key
       - file: /etc/pki/tls/certs/{{ unhangout_domain }}.crt
@@ -195,7 +204,6 @@ unhangout-service:
     - require:
       - file: /var/log/node/unhangout
 
-{% if server_env == 'production' -%}
 /etc/monit.d/unhangout:
   file:
     - managed

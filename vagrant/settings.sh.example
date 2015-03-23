@@ -13,6 +13,17 @@
 # installation script has permissions to create this directory.
 #VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
 
+# Full path to the Git checkout of the unhangout repository on the host.
+# If the directory does not already exist, then Git will be used to clone the
+# repository to this directory, using the URL and branch configured below.
+#UNHANGOUT_GIT_DIR="${HOME}/git/unhangout"
+
+# The Git URL to use when checking out the unhangout repository.
+#UNHANGOUT_GIT_URL="https://github.com/drewww/unhangout.git"
+
+# The Git branch to use when checking out the unhangout repository.
+#UNHANGOUT_GIT_BRANCH="master"
+
 # Directory where the salt and pillar file roots are located. This is auto
 # configured by the deployement script, so unless you're doing something
 # custom, it's advised not to edit it.

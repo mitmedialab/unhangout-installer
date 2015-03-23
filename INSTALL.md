@@ -40,12 +40,11 @@ Installation is fairly straightforward:
 
 ## Working on the installed code.
 
- * On all environments, the Unhangout code base is installed at <code>/usr/local/node/unhangout</code>, and start/stop/restart of the server can be managed by the script installed at <code>/etc/init.d/unhangout</code>.
- * On production environments, all essential services are monitored via monit, and start/stop/restart of the services should be handled via [monit commands](http://mmonit.com/monit/documentation/monit.html#Arguments).
- * On Vagrant installations, the unhangout codebase can also be accessed directly from the host machine, in the <code>unhangout</code> directory inside the <code>VM_INSTALL_DIR</code> directory specified in <code>settings.sh</code>. This enables use of your favorite editor instead of the more limited options on the virtual machine.
- * The unhangout code base is a git clone, and git is installed and ready to use with it.
+ * On all server environments, the Unhangout code base is installed at <code>/usr/local/node/unhangout</code>.
+ * On production environments, the Unhangout service is started at system boot. All essential services are monitored via monit, and start/stop/restart of the services should be handled via [monit commands](http://mmonit.com/monit/documentation/monit.html#Arguments).
+ * On development environments, the Unhangout service is not started at system boot. Start/stop/restart of the service can be managed by the script installed on the virtual machine at <code>/etc/init.d/unhangout</code>. The <code>vagrant/manage-vm.sh</code> script on the host can be used to start the virtual server, and will also handle starting the Unhangout service.
+ * On Vagrant installations, the Unhangout code base can also be accessed directly from the host machine, in the configured <code>UNHANGOUT_GIT_DIR</code> directory specified in <code>settings.sh</code>. This enables use of your favorite editor instead of the more limited options on the virtual machine.
 
 ## Known issues
 
- * Vagrant installations using <code>vagrant/development-environment-init.sh</code> have a glitch where the Unhangout service doesn't have access to the files on the host machine until after boot. Each time the VM is rebooted, you must log into the server and run <code>service unhangout start</code> to activate the Unhangout node service. Or, you can use the <code>vagrant/manage-vm.sh</code> script to start the server, which will handle that for you.
  * Production installations fail to start the Unhangout service and its Monit monitoring after the initial Salt deployment. Running <code>service unhangout start</code>, followed by <code>monit start unhangout</code> fixes the issue. Subsequent server reboots do not have this issue.

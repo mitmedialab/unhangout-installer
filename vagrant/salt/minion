@@ -13,3 +13,4 @@ pillar_roots:
 grains:
   server:
     env: development
+    type: vagrant

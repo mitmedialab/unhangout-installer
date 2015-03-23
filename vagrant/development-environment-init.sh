@@ -7,6 +7,9 @@ SSH_CONFIG_LABEL="unhangout"
 PORTS_TO_CHECK="2222 7778 8080"
 MESSAGE_STORE=""
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
+UNHANGOUT_GIT_DIR="${HOME}/git/unhangout"
+UNHANGOUT_GIT_URL="https://github.com/drewww/unhangout.git"
+UNHANGOUT_GIT_BRANCH="master"
 
 SCRIPT_NAME=`basename $0`
 
@@ -60,6 +63,23 @@ check_executable() {
   fi
 }
 
+setup_git_repo() {
+  if [ ! -d "${UNHANGOUT_GIT_DIR}" ]; then
+    echo "Setting up $UNHANGOUT_GIT_URL repository in ${UNHANGOUT_GIT_DIR}..."
+    git clone $UNHANGOUT_GIT_URL $UNHANGOUT_GIT_DIR
+    cd ${UNHANGOUT_GIT_DIR}
+    if [ "$UNHANGOUT_GIT_BRANCH" = "master" ]; then
+      git branch --set-upstream-to=origin/master master
+      git config remote.origin.push HEAD
+    else
+      local git_branch=`git rev-parse --abbrev-ref HEAD`
+      if [ "$git_branch" != "$UNHANGOUT_GIT_BRANCH" ]; then
+        echo "Checking out ${UNHANGOUT_GIT_BRANCH}, and setting up remote tracking..."
+        git checkout -t origin/${UNHANGOUT_GIT_BRANCH}
+      fi
+    fi
+  fi
+}
 if [ -n "$DEV_SERVER" ]; then
   echo -n "Enter the username you were given for the main development
   server (${DEV_SERVER}): "
@@ -98,6 +118,9 @@ for port in $PORTS_TO_CHECK; do
   fi
 done
 
+echo "Checking for Git..."
+check_executable git Git
+
 echo "Checking for rsync..."
 check_executable rsync rsync
 
@@ -116,8 +139,10 @@ fi
 
 echo "All pre-flight checks passed"
 
+setup_git_repo
+
 echo "Initializing development server install..."
-${VAGRANT_CONFIG_DIR}/vm-init.sh "$VAGRANT_CONFIG_DIR" "$VM_INSTALL_DIR" "$DEV_USERNAME" "$DEV_SERVER"
+${VAGRANT_CONFIG_DIR}/vm-init.sh "$VAGRANT_CONFIG_DIR" "$VM_INSTALL_DIR" "$UNHANGOUT_GIT_DIR" "$DEV_USERNAME" "$DEV_SERVER"
 
 if [ -z "$MESSAGE_STORE" ]; then
   echo
