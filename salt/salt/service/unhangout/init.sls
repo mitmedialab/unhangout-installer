@@ -203,6 +203,7 @@ unhangout-service:
       - file: /etc/sysconfig/unhangout
     - require:
       - file: /var/log/node/unhangout
+      - file: /usr/local/node/unhangout/public/logs/chat
 
 /etc/monit.d/unhangout:
   file:
