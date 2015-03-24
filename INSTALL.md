@@ -47,4 +47,4 @@ Installation is fairly straightforward:
 
 ## Known issues
 
- * Production installations fail to start the Unhangout service and its Monit monitoring after the initial Salt deployment. Running <code>service unhangout start</code>, followed by <code>monit start unhangout</code> fixes the issue. Subsequent server reboots do not have this issue.
+None at this time.
