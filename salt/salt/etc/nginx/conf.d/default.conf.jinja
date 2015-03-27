@@ -1,5 +1,23 @@
 server {
   listen {{ nginx_http_port }};
   server_name {{ unhangout_domain }};
-  return 301 https://{{ unhangout_domain }}:{{ nginx_https_port }}$request_uri;
+  return 302 https://{{ unhangout_domain }}:{{ unhangout_https_port }}$request_uri;
 }
+
+{% if server_env == 'production' and nginx_https_port != unhangout_https_port -%}
+server {
+  listen {{ nginx_https_port }};
+  server_name {{ unhangout_domain }};
+
+  ssl on;
+  ssl_certificate /etc/pki/tls/certs/{{ unhangout_domain }}.crt;
+  ssl_certificate_key /etc/pki/tls/private/{{ unhangout_domain }}.key;
+  ssl_session_cache shared:SSL:10m;
+  ssl_session_timeout  10m;
+
+  ssl_protocols  SSLv2 SSLv3 TLSv1;
+  ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+  ssl_prefer_server_ciphers   on;
+  return 302 https://{{ unhangout_domain }}:{{ unhangout_https_port }}$request_uri;
+}
+{% endif -%}

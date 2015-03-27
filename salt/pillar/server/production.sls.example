@@ -5,12 +5,6 @@
 # For more details on how to write pillar files, see:
 # http://docs.saltstack.com/en/latest/topics/pillar
 
-# Example production configuration.
-#server:
-#  firewall:
-#    nat:
-#      https_port: 443
-
 #service:
 #  unhangout:
 #    google:
@@ -27,6 +21,7 @@
 #    # salt/vars.jinja for more info.
 #    custom_domain: 'example.com'
 #    http_port: 80
+#    https_port: 443
 #  sshd:
 #    port: 5000
 

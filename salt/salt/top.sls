@@ -1,3 +1,5 @@
+{% from 'vars.jinja' import server_env with context -%}
+
 base:
   '*':
     - service.network
@@ -12,7 +14,9 @@ base:
     - service.salt-minion
     - service.monit
     - service.redis
+{% if server_env == 'production' %}
     - service.nginx
+{% endif %}
     - service.nodejs
     - service.npm
     - service.unhangout

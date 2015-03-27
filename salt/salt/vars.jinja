@@ -4,6 +4,9 @@
 # NOTE: Do not customize the variables here! Do so in an appropriate pillar
 # or grain file, see Salt documentation for details: http://docs.saltstack.com
 
+# Private variables.
+{% set _default_https_port = '7778' %}
+
 # Server environment.
 {% set server_env = salt['grains.get']('server:env', 'development') %}
 {% set server_type = salt['grains.get']('server:type', '') %}
@@ -21,8 +24,8 @@
 {% set unhangout_managers = salt['pillar.get']('service:unhangout:managers', []) -%}
 {% set unhangout_email_log_recipients = salt['pillar.get']('service:unhangout:email_log_recipients', []) -%}
 {% set unhangout_domain = salt['pillar.get']('service:unhangout:domain', 'localhost') -%}
-{% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', '7778') -%}
-{% set unhangout_localhost_port = salt['pillar.get']('service:unhangout:localhost_port', '7778') -%}
+{% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', _default_https_port) -%}
+{% set unhangout_localhost_port = salt['pillar.get']('service:unhangout:localhost_port', _default_https_port) -%}
 
 # Unhangout server configuration.
 # The node.js environment to run under, can be one of 'testing', 'production'.
@@ -40,14 +43,11 @@
 # Port to run the SSH daemon on.
 {% set sshd_port = salt['pillar.get']('service:sshd:port', 22) -%}
 
-# Firewall.
-# The publicly-accessible port for HTTPS connections.
-# If this is different than [unhangout_https_port], a forwarding rule will be set up.
-{% set nat_https_port = salt['pillar.get']('server:firewall:nat:https_port', '7778') -%}
-
 # Nginx.
 # HTTP port to listen on.
 {% set nginx_http_port = salt['pillar.get']('service:nginx:http_port', '8080') -%}
+# HTTPS port to listen on.
+{% set nginx_https_port = salt['pillar.get']('service:nginx:https_port', _default_https_port) -%}
 # Setting this will look for a file named [nginx_custom_domain].conf.jinja in
 # salt/etc/nginx/conf.d, and configure /etc/nginx/conf.d/[nginx_custom_domain].conf
 # on the server. See salt/service/nginx/init.sls for details, and

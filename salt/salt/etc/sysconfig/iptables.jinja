@@ -17,10 +17,12 @@
 -A INPUT -p tcp -m state --state NEW -m tcp --dport {{ sshd_port }} -j ACCEPT
 
 # Allow other TCP service connections as configured.
--A INPUT -p tcp -m tcp --dport {{ nginx_http_port }} -j ACCEPT -m state --state NEW
 -A INPUT -p tcp -m tcp --dport {{ unhangout_https_port }} -j ACCEPT -m state --state NEW
-{% if nat_https_port != unhangout_https_port -%}
--A INPUT -p tcp -m tcp --dport {{ nat_https_port }} -j ACCEPT -m state --state NEW
+{% if server_env == 'production' -%}
+-A INPUT -p tcp -m tcp --dport {{ nginx_http_port }} -j ACCEPT -m state --state NEW
+{% if nginx_https_port != unhangout_https_port -%}
+-A INPUT -p tcp -m tcp --dport {{ nginx_https_port }} -j ACCEPT -m state --state NEW
+{% endif -%}
 {% endif -%}
 
 # Allow certain ICMP packets.
@@ -36,11 +38,3 @@
 
 COMMIT
 
-{% if nat_https_port != unhangout_https_port -%}
-*nat
-:PREROUTING ACCEPT
-:POSTROUTING ACCEPT
-:OUTPUT ACCEPT
--A PREROUTING -p tcp -m tcp --dport {{ nat_https_port }} -j REDIRECT --to-port {{ unhangout_https_port }}
-COMMIT
-{% endif -%}

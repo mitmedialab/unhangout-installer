@@ -1,11 +1,12 @@
+{% from 'vars.jinja' import server_env, server_type, google_client_id, google_client_secret, google_project_id, google_spreadsheet_key, unhangout_session_secret, unhangout_server_email_address, unhangout_superuser_emails, unhangout_managers, unhangout_email_log_recipients, unhangout_node_env, unhangout_domain, unhangout_https_port, unhangout_localhost_port, unhangout_git_url, unhangout_git_branch, redis_host, redis_port, redis_db with context -%}
+
 include:
   - service.nodejs
   - service.npm
   - service.redis
+{% if server_env == 'production' %}
   - service.monit
-
-{% from 'vars.jinja' import server_env, server_type, google_client_id, google_client_secret, google_project_id, google_spreadsheet_key, unhangout_session_secret, unhangout_server_email_address, unhangout_superuser_emails, unhangout_managers, unhangout_email_log_recipients, unhangout_node_env, unhangout_domain, unhangout_https_port, unhangout_localhost_port, unhangout_git_url, unhangout_git_branch, redis_host, redis_port, redis_db with context -%}
-
+{% endif %}
 
 # Figure out if custom SSL files exist for install.
 {% set custom_ssl_files_exist = [] -%}
