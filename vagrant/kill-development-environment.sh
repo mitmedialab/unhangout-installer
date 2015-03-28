@@ -55,8 +55,7 @@ if [ -d $VM_INSTALL_DIR ]; then
     cd $CWD
     rm -rf $VM_INSTALL_DIR
 
-    echo "Removal complete. DNS entries added to /etc/hosts will need
-to be removed manually."
+    echo "Removal complete."
 
     if [ -d $UNHANGOUT_GIT_DIR ]; then
       echo "$UNHANGOUT_GIT_DIR was preserved, and can be removed manually."
