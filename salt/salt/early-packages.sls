@@ -1,5 +1,6 @@
 early-packages:
   pkg.installed:
+    - order: 1
     - pkgs:
       - curl
       - perl

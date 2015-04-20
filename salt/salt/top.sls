@@ -2,15 +2,16 @@
 
 base:
   '*':
+    - early-packages
+    - update-packages
+    - repo
+    - base-packages
     - service.network
     - service.firewall
     - auth.dev-root
     - service.ssh
     - base
     - selinux
-    - early-packages
-    - repo
-    - base-packages
     - service.salt-minion
     - service.monit
     - service.redis

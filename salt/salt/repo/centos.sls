@@ -1,5 +1,6 @@
 /etc/yum.repos.d/CentOS-Base.repo:
   file:
+    - order: 3
     - managed
     - source: salt://etc/yum.repos.d/CentOS-Base.repo
     - user: root
@@ -8,9 +9,17 @@
 
 /etc/yum.repos.d/CentOS-Debuginfo.repo:
   file.absent:
-    - name: /etc/yum.repos.d/CentOS-Debuginfo.repo
+    - order: 3
+
+/etc/yum.repos.d/CentOS-fasttrack.repo:
+  file.absent:
+    - order: 3
 
 /etc/yum.repos.d/CentOS-Media.repo:
   file.absent:
-    - name: /etc/yum.repos.d/CentOS-Media.repo
+    - order: 3
+
+/etc/yum.repos.d/CentOS-Vault.repo:
+  file.absent:
+    - order: 3
 

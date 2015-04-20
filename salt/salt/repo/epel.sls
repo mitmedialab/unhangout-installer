@@ -22,8 +22,10 @@
   } %}
 {% endif %}
 
+
 install-epel-pubkey:
   file:
+    - order: 3
     - managed
     - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL
     - source: {{ salt['pillar.get']('epel:pubkey', pkg.key) }}
@@ -31,6 +33,7 @@ install-epel-pubkey:
 
 install-epel-release:
   pkg:
+    - order: 3
     - installed
     - sources:
       - epel-release: {{ salt['pillar.get']('epel:rpm', pkg.rpm) }}
@@ -39,6 +42,7 @@ install-epel-release:
 
 /etc/yum.repos.d/epel.repo:
   file:
+    - order: 3
     - managed
     - source: salt://etc/yum.repos.d/epel-{{ grains['osmajorrelease'][0] }}.repo
     - user: root
@@ -50,6 +54,7 @@ install-epel-release:
 
 /etc/yum.repos.d/epel-testing.repo:
   file.absent:
+    - order: 3
     - name: /etc/yum.repos.d/epel-testing.repo
     - require:
       - pkg: install-epel-release

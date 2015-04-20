@@ -1,8 +1,6 @@
-update-packages:
-  pkg.uptodate
-
 base-packages:
   pkg.installed:
+    - order: 4
     - pkgs:
       - bash-completion
       - colordiff
