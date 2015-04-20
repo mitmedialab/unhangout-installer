@@ -152,6 +152,25 @@ npm-bootstrap-unhangout:
       - {{ unhangout_git_checkout_dependency }}
       - file: /usr/local/node/unhangout/conf.json
 
+# This directory is created up front so the production node user can write to
+# it.
+/usr/local/node/unhangout/node_modules/googleapis/.cache:
+  file.directory:
+# Development machines can have more lax security standards, and having the
+# root user own this file completely aids in Vagrant installs.
+{% if server_env == 'development' %}
+    - user: root
+    - group: root
+    - mode: 755
+{% else %}
+    - user: root
+    - group: node
+    - mode: 775
+{% endif %}
+    - require:
+      - group: node-group
+      - npm: npm-bootstrap-unhangout
+
 unhangout-compile-assets:
   cmd.wait:
     - name: bin/compile-assets.js
