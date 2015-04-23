@@ -45,6 +45,10 @@ Installation is fairly straightforward:
  * On development environments, the Unhangout service is not started at system boot. Start/stop/restart of the service can be managed by the script installed on the virtual machine at <code>/etc/init.d/unhangout</code>. The <code>vagrant/manage-vm.sh</code> script on the host can be used to start the virtual server, and will also handle starting the Unhangout service.
  * On Vagrant installations, the Unhangout code base can also be accessed directly from the host machine, in the configured <code>UNHANGOUT_GIT_DIR</code> directory specified in <code>settings.sh</code>. This enables use of your favorite editor instead of the more limited options on the virtual machine.
 
+## Customizing the Salt configuration.
+
+ * It is possible to further customize the Salt configuration without editing the default Salt configuration files. The system will look for <code>custom/init.sls</code> in the Salt file root, and if found, execute it last. Within this file you can do as much additional setup as you like, including calling other SLS files you may place in the <code>custom</code> directory.
+
 ## Known issues
 
 None at this time.

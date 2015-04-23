@@ -1,4 +1,4 @@
-{% from 'vars.jinja' import server_env, sshd_port, unhangout_https_port, nginx_http_port, nginx_https_port with context %}
+{% from 'vars.jinja' import server_env, sshd_port, unhangout_https_port, nginx_http_port, nginx_https_port, firewall_custom_configs with context %}
 
 iptables-package:
   pkg.installed:
@@ -14,6 +14,7 @@ iptables-package:
       unhangout_https_port: {{ unhangout_https_port }}
       nginx_http_port: {{ nginx_http_port }}
       nginx_https_port: {{ nginx_https_port }}
+      firewall_custom_configs: {{ firewall_custom_configs }}
     - user: root
     - group: root
     - mode: 755

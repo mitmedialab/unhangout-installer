@@ -25,6 +25,13 @@
 {% endif -%}
 {% endif -%}
 
+# If custom firewall templates have been configured, insert them here.
+{% if firewall_custom_configs -%}
+{% for config in firewall_custom_configs -%}
+{% include config -%}
+{% endfor -%}
+{% endif %}
+
 # Allow certain ICMP packets.
 -A INPUT -p icmp -m state --state NEW,RELATED,ESTABLISHED -m limit --limit 30/sec -m icmp --icmp-type 8 -j ACCEPT
 -A INPUT -p icmp -m limit --limit 30/sec -m icmp --icmp-type 3 -j ACCEPT

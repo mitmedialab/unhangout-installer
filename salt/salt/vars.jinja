@@ -62,3 +62,11 @@
 # Database to write to on the database host.
 {% set redis_db = salt['pillar.get']('service:redis:db', '0') -%}
 
+# Firewall.
+# The native Salt implementation of iptables is poor as of the version when
+# this variable was added. As such, it's provided here as a way to inject any
+# custom configuration into the firewall. Should be an array of paths
+# (relative from the salt file root) to Jinja templates that will be injected
+# into the default firewall config using Jinja's include directive.
+{% set firewall_custom_configs = salt['pillar.get']('service:firewall:custom_configs', []) -%}
+
