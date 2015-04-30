@@ -18,3 +18,5 @@ salt/salt/etc/nginx/conf.d/*.conf.jinja
 salt/salt/service/unhangout/ssl/*.crt
 salt/salt/service/unhangout/ssl/*.key
 
+# Custom config directory.
+custom/
