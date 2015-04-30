@@ -33,6 +33,8 @@
 {% set unhangout_testing_selenium_verbose = salt['pillar.get']('service:unhangout:testing:selenium:verbose', false) -%}
 {% set unhangout_testing_firefox_bin = salt['pillar.get']('service:unhangout:testing:firefox:bin', '/usr/bin/firefox') -%}
 {% set unhangout_mandrill_api_key = salt['pillar.get']('service:unhangout:mandrill:api_key', '... mandrill api key ...') -%}
+{% set unhangout_custom_css_files = salt['pillar.get']('service:unhangout:custom_css_files', []) -%}
+{% set unhangout_custom_facilitator_css_files = salt['pillar.get']('service:unhangout:custom_facilitator_css_files', []) -%}
 
 # Unhangout server configuration.
 # The node.js environment to run under, can be one of 'testing', 'production'.

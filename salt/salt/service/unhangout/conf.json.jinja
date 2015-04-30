@@ -36,5 +36,8 @@
     "TESTING_SELENIUM_PATH": "{{ unhangout_testing_selenium_path }}",
     "TESTING_SELENIUM_VERBOSE": {{ selenium_verbose }},
     "TESTING_FIREFOX_BIN": "{{ unhangout_testing_firefox_bin }}",
-    "MANDRILL_API_KEY": "{{ unhangout_mandrill_api_key }}"
+    "MANDRILL_API_KEY": "{{ unhangout_mandrill_api_key }}",
+
+    "CUSTOM_CSS_FILES": {{ unhangout_custom_css_files|replace("'", '"') }},
+    "CUSTOM_FACILITATOR_CSS_FILES": {{ unhangout_custom_facilitator_css_files|replace("'", '"') }}
 }
