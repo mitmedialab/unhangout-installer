@@ -10,6 +10,7 @@ This project attempts to ease the installation and configuration of the [Unhango
  * Dead-easy setup for local development environments using [Vagrant](https://www.vagrantup.com).
  * Sensible defaults that are easily overridden via config files.
  * Easily extend the automated deployment scripts for further server customization.
+ * Extra goodies installed for development setups to aid/ease development.
 
 ## Installation
 
