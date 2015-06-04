@@ -3,8 +3,8 @@
 # Handles the host layer of setting up an Unhangout development server.
 
 DEV_SERVER=
+SSH_PORT="2222"
 SSH_CONFIG_LABEL="unhangout"
-PORTS_TO_CHECK="2222 7778 8080"
 MESSAGE_STORE=""
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
 UNHANGOUT_GIT_DIR="${HOME}/git/unhangout"
@@ -45,6 +45,7 @@ VAGRANT_CONFIG_DIR=`find_full_path_to_file`
 if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
   . ${VAGRANT_CONFIG_DIR}/settings.sh
 fi
+PORTS_TO_CHECK="${SSH_PORT} 7778 8080"
 
 CWD=`pwd`
 
@@ -162,7 +163,7 @@ echo "Add the following entry to your .ssh/config file, then use
 
 Host ${SSH_CONFIG_LABEL}
   Hostname localhost
-  Port 2222
+  Port ${SSH_PORT}
   User root
   HostKeyAlias ${SSH_CONFIG_LABEL}
 "

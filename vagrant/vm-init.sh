@@ -9,6 +9,7 @@ DEV_USER=$4
 DEV_SERVER=$5
 SALT_DIR="`dirname $VAGRANT_CONFIG_DIR 2> /dev/null`/salt"
 VM_NODE_PROJECT_DIR="/usr/local/node"
+SSH_PORT="2222"
 
 SCRIPT_NAME=`basename $0`
 
@@ -54,6 +55,8 @@ cp ${VAGRANT_CONFIG_DIR}/Vagrantfile .
 # This is the directory that will sync with the VM's unhangout codebase.
 mkdir unhangout
 # Cross-platform trick for sed inline editing.
+sed -i.bak "s%###SSH_PORT###%${SSH_PORT}%g" Vagrantfile
+rm Vagrantfile.bak
 sed -i.bak "s%###SALT_DIR###%${SALT_DIR}%g" Vagrantfile
 rm Vagrantfile.bak
 sed -i.bak "s%###UNHANGOUT_GIT_DIR###%${UNHANGOUT_GIT_DIR}%g" Vagrantfile

@@ -29,5 +29,8 @@
 # custom, it's advised not to edit it.
 #SALT_DIR="`dirname $VAGRANT_CONFIG_DIR`/salt"
 
+# The port on the host to use for connecting to the VM's SSH daemon.
+#SSH_PORT="2222"
+
 # The label for the entry to be placed in .ssh/config.
 #SSH_CONFIG_LABEL="unhangout"
