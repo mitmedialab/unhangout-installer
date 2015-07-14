@@ -217,7 +217,6 @@ unhangout-compile-assets:
     - mode: 644
     - require:
       - pkg: monit
-      - service: unhangout-service
 {% endif -%}
 
 extend:
