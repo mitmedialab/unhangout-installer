@@ -205,26 +205,6 @@ unhangout-compile-assets:
       - cmd: unhangout-compile-assets
 
 {% if server_env == 'production' -%}
-unhangout-service:
-  service:
-    - running
-    - name: unhangout
-    - enable: True
-    - restart: True
-    - watch:
-      - pkg: nodejs
-      - {{ unhangout_git_checkout_dependency }}
-      - file: /usr/local/node/unhangout/conf.json
-      - file: /etc/pki/tls/private/{{ unhangout_domain }}.key
-      - file: /etc/pki/tls/certs/{{ unhangout_domain }}.crt
-      - cmd: unhangout-compile-assets
-      - npm: npm-bootstrap-unhangout
-      - file: /etc/init.d/unhangout
-      - file: /etc/sysconfig/unhangout
-    - require:
-      - file: /var/log/node/unhangout
-      - file: /usr/local/node/unhangout/public/logs/chat
-
 /etc/monit.d/unhangout:
   file:
     - managed
@@ -245,7 +225,19 @@ extend:
   monit-service:
     service:
       - watch:
+        - pkg: nodejs
+        - {{ unhangout_git_checkout_dependency }}
+        - file: /usr/local/node/unhangout/conf.json
+        - file: /etc/pki/tls/private/{{ unhangout_domain }}.key
+        - file: /etc/pki/tls/certs/{{ unhangout_domain }}.crt
+        - cmd: unhangout-compile-assets
+        - npm: npm-bootstrap-unhangout
+        - file: /etc/init.d/unhangout
+        - file: /etc/sysconfig/unhangout
         - file: /etc/monit.d/unhangout
+      - require:
+        - file: /var/log/node/unhangout
+        - file: /usr/local/node/unhangout/public/logs/chat
 {% endif %}
   redis-service:
     service:
