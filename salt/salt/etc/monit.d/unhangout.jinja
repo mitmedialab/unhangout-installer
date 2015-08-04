@@ -1,4 +1,4 @@
-check process unhangout with pidfile /var/run/unhangout-{{ unhangout_domain }}.pid
+check process unhangout-{{ unhangout_domain }} with pidfile /var/run/unhangout-{{ unhangout_domain }}.pid
   start program = "/etc/init.d/unhangout-{{ unhangout_domain }} start"
   stop  program = "/etc/init.d/unhangout-{{ unhangout_domain }} stop"
   if failed host 127.0.0.1 port {{ unhangout_https_port }} then restart
