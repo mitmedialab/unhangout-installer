@@ -31,7 +31,7 @@
 # The node.js environment to run under, can be one of 'testing', 'production'.
 {% set unhangout_node_env = salt['pillar.get']('service:unhangout:node_env', 'testing') -%}
 # Git URL for the unhangout checkout.
-{% set unhangout_git_url = salt['pillar.get']('service:unhangout:git:url', 'https://github.com/drewww/unhangout.git') -%}
+{% set unhangout_git_url = salt['pillar.get']('service:unhangout:git:url', 'https://github.com/unhangout/unhangout.git') -%}
 # Git branch for the unhangout checkout.
 {% set unhangout_git_branch = salt['pillar.get']('service:unhangout:git:branch', 'master') -%}
 
