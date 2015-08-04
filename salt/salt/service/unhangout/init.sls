@@ -180,6 +180,7 @@ npm-bootstrap-{{ unhangout_domain }}:
     - managed
     - template: jinja
     - context:
+      unhangout_domain: {{ unhangout_domain }}
       unhangout_https_port: {{ unhangout_https_port }}
     - source: salt://etc/monit.d/unhangout.jinja
     - user: root
