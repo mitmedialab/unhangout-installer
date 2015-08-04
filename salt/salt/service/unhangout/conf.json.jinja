@@ -5,7 +5,7 @@
     "UNHANGOUT_EVENTS_SPREADSHEET": "{{ google_spreadsheet_key }}",
 
     "UNHANGOUT_PORT": {{ unhangout_https_port }},
-    "UNHANGOUT_HOST": "{{ unhangout_domain }}",
+    "UNHANGOUT_HOST": "{{ www_domain }}",
 
     "UNHANGOUT_REDIS_HOST": "{{ redis_host }}",
     "UNHANGOUT_REDIS_PORT": {{ redis_port }},
@@ -28,8 +28,8 @@
 
     "UNHANGOUT_USE_SSL": true,
     "UNHANGOUT_REDIRECT_HTTP": false,
-    "UNHANGOUT_PRIVATE_KEY": "/etc/pki/tls/private/{{ unhangout_domain }}.key",
-    "UNHANGOUT_CERTIFICATE": "/etc/pki/tls/certs/{{ unhangout_domain }}.crt",
+    "UNHANGOUT_PRIVATE_KEY": "/etc/pki/tls/private/{{ ssl_domain }}.key",
+    "UNHANGOUT_CERTIFICATE": "/etc/pki/tls/certs/{{ ssl_domain }}.crt",
 
     "EMAIL_LOG_RECIPIENTS": {{ unhangout_email_log_recipients|replace("'", '"') }},
     "UNHANGOUT_LOG_DIR": "/var/log/node/unhangout",

@@ -40,9 +40,9 @@ Installation is fairly straightforward:
 
 ## Working on the installed code.
 
- * On all server environments, the Unhangout code base is installed at <code>/usr/local/node/unhangout</code>.
+ * On all server environments, the Unhangout code base is installed at <code>/usr/local/node/unhangout-[[unhangout_domain]]</code>.
  * On production environments, the Unhangout service is started at system boot. All essential services are monitored via monit, and start/stop/restart of the services should be handled via [monit commands](http://mmonit.com/monit/documentation/monit.html#Arguments).
- * On development environments, the Unhangout service is not started at system boot. Start/stop/restart of the service can be managed by the script installed on the virtual machine at <code>/etc/init.d/unhangout</code>. The <code>vagrant/manage-vm.sh</code> script on the host can be used to start the virtual server, and will also handle starting the Unhangout service. Another option is to use the globally installed <code>nodemon</code> package, which will automatically restart unhangout on any file changes.
+ * On development environments, the Unhangout service is not started at system boot. Start/stop/restart of the service can be managed by the script installed on the virtual machine at <code>/etc/init.d/unhangout-[[unhangout_domain]]</code>. The <code>vagrant/manage-vm.sh</code> script on the host can be used to start the virtual server, and will also handle starting the Unhangout service. Another option is to use the globally installed <code>nodemon</code> package, which will automatically restart unhangout on any file changes.
  * On Vagrant installations, the Unhangout code base can also be accessed directly from the host machine, in the configured <code>UNHANGOUT_GIT_DIR</code> directory specified in <code>settings.sh</code>. This enables use of your favorite editor instead of the more limited options on the virtual machine.
 
 ## Customizing the Salt configuration.

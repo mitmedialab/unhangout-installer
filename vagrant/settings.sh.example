@@ -19,10 +19,14 @@
 #UNHANGOUT_GIT_DIR="${HOME}/git/unhangout"
 
 # The Git URL to use when checking out the unhangout repository.
-#UNHANGOUT_GIT_URL="https://github.com/drewww/unhangout.git"
+#UNHANGOUT_GIT_URL="https://github.com/unhangout/unhangout.git"
 
 # The Git branch to use when checking out the unhangout repository.
 #UNHANGOUT_GIT_BRANCH="master"
+
+# The domain name used for the unhangout installation. This should be identical
+# to the unhangout_domain parameter value found in the salt configuration.
+#UNHANGOUT_DOMAIN="localhost"
 
 # Directory where the salt and pillar file roots are located. This is auto
 # configured by the deployement script, so unless you're doing something

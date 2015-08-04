@@ -10,6 +10,7 @@ DEV_SERVER=$5
 SALT_DIR="`dirname $VAGRANT_CONFIG_DIR 2> /dev/null`/salt"
 VM_NODE_PROJECT_DIR="/usr/local/node"
 SSH_PORT="2222"
+UNHANGOUT_DOMAIN="localhost"
 
 SCRIPT_NAME=`basename $0`
 
@@ -46,6 +47,7 @@ if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
   . ${VAGRANT_CONFIG_DIR}/settings.sh
 fi
 
+
 echo "Creating ${VM_INSTALL_DIR}..."
 mkdir -p ${VM_INSTALL_DIR}
 
@@ -60,6 +62,8 @@ rm Vagrantfile.bak
 sed -i.bak "s%###SALT_DIR###%${SALT_DIR}%g" Vagrantfile
 rm Vagrantfile.bak
 sed -i.bak "s%###UNHANGOUT_GIT_DIR###%${UNHANGOUT_GIT_DIR}%g" Vagrantfile
+rm Vagrantfile.bak
+sed -i.bak "s%###UNHANGOUT_DOMAIN###%${UNHANGOUT_DOMAIN}%g" Vagrantfile
 rm Vagrantfile.bak
 if [ -n "$DEV_SERVER" ]; then
   echo "Downloading salt config for dev user ${DEV_USER} from ${DEV_SERVER}..."

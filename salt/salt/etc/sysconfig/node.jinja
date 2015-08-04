@@ -1,5 +1,5 @@
-APP=/usr/local/node/unhangout/bin/unhangout-server
-LOGFILE=/var/log/node/unhangout/console.log
+APP=/usr/local/node/unhangout-{{ unhangout_domain }}/bin/unhangout-server
+LOGFILE=/var/log/node/unhangout-{{ unhangout_domain }}/console.log
 NODE_ENV={{ unhangout_node_env }}
 {% if server_env == 'development' -%}
 NODE_USER="root"

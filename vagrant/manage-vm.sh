@@ -3,6 +3,7 @@
 # Convenience script for starting/stopping the virtual machine.
 
 VM_INSTALL_DIR="${HOME}/vagrant/unhangout"
+UNHANGOUT_DOMAIN="localhost"
 
 SCRIPT_NAME=`basename $0`
 
@@ -35,7 +36,7 @@ if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
 fi
 
 start() {
-  vagrant up && vagrant ssh -- "sudo service unhangout start"
+  vagrant up && vagrant ssh -- "sudo service unhangout-${UNHANGOUT_DOMAIN} start"
   RETVAL=$?
 }
 
