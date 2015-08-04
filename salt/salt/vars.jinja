@@ -42,6 +42,14 @@
 # Git branch for the unhangout checkout.
 {% set unhangout_git_branch = salt['pillar.get']('service:unhangout:git:branch', 'master') -%}
 
+# Unhangout auto farming configuration.
+{% set unhangout_farming_email = salt['pillar.get']('service:unhangout:farming:email', '... google email address ...') -%}
+{% set unhangout_farming_password = salt['pillar.get']('service:unhangout:farming:password', '... google password ...') -%}
+{% set unhangout_farming_count = salt['pillar.get']('service:unhangout:farming:count', 10) -%}
+# What hour to run the autofarming, uses 24 hour format, hour only, based on
+# server clock.
+{% set unhangout_farming_hour = salt['pillar.get']('service:unhangout:farming:hour', 3) -%}
+
 # Network.
 # The server ID, set by the salt minion config file - must be edited there.
 {% set server_id = grains['id'] -%}

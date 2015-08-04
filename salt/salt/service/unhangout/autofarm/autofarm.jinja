@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# The directory change is necessary because of Firefox permission errors when
+# running the script from the unhangout directory.
+cd /tmp
+DISPLAY=99.0 xvfb-run /usr/local/node/unhangout-{{ unhangout_domain }}/bin/selenium-farmer.js
+exit $?
+
+# vi: ft=sh
