@@ -1,4 +1,4 @@
-{% from 'vars.jinja' import server_env, server_type, google_client_id, google_client_secret, google_project_id, google_spreadsheet_key, unhangout_session_secret, unhangout_server_email_address, unhangout_superuser_emails, unhangout_managers, unhangout_email_log_recipients, unhangout_node_env, unhangout_domain, unhangout_https_port, unhangout_localhost_port, unhangout_git_url, unhangout_git_branch, redis_host, redis_port, redis_db with context -%}
+{% from 'vars.jinja' import server_env, server_type, google_client_id, google_client_secret, google_project_id, google_spreadsheet_key, unhangout_session_secret, unhangout_server_email_address, unhangout_superuser_emails, unhangout_managers, unhangout_email_log_recipients, unhangout_node_env, unhangout_domain, unhangout_https_port, unhangout_localhost_port, unhangout_git_url, unhangout_git_branch, redis_host, redis_port, redis_db, unhangout_testing_selenium_path, unhangout_testing_selenium_verbose, unhangout_testing_firefox_bin, unhangout_mandrill_api_key with context -%}
 
 {% set www_domain = unhangout_domain -%}
 {% set ssl_domain = unhangout_domain -%}
@@ -92,6 +92,10 @@ include:
       redis_host: {{ redis_host }}
       redis_port: {{ redis_port }}
       redis_db: {{ redis_db }}
+      unhangout_testing_selenium_path: {{ unhangout_testing_selenium_path }}
+      unhangout_testing_selenium_verbose: {{ unhangout_testing_selenium_verbose }}
+      unhangout_testing_firefox_bin: {{ unhangout_testing_firefox_bin }}
+      unhangout_mandrill_api_key: {{ unhangout_mandrill_api_key }}
     - source: salt://service/unhangout/conf.json.jinja
     - user: root
 # Development machines can have more lax security standards, and having the

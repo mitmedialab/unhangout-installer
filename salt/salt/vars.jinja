@@ -26,6 +26,11 @@
 {% set unhangout_domain = salt['pillar.get']('service:unhangout:domain', 'localhost') -%}
 {% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', _default_https_port) -%}
 {% set unhangout_localhost_port = salt['pillar.get']('service:unhangout:localhost_port', _default_https_port) -%}
+{% set unhangout_testing_selenium_version = salt['pillar.get']('service:unhangout:testing:selenium:version', '2.47.1') -%}
+{% set unhangout_testing_selenium_path = salt['pillar.get']('service:unhangout:testing:selenium:path', '/usr/local/lib/selenium-server-standalone.jar') -%}
+{% set unhangout_testing_selenium_verbose = salt['pillar.get']('service:unhangout:testing:selenium:verbose', false) -%}
+{% set unhangout_testing_firefox_bin = salt['pillar.get']('service:unhangout:testing:firefox:bin', '/usr/bin/firefox') -%}
+{% set unhangout_mandrill_api_key = salt['pillar.get']('service:unhangout:mandrill:api_key', '... mandrill api key ...') -%}
 
 # Unhangout server configuration.
 # The node.js environment to run under, can be one of 'testing', 'production'.
