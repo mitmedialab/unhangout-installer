@@ -84,6 +84,7 @@ include:
       unhangout_superuser_emails: {{ unhangout_superuser_emails }}
       unhangout_managers: {{ unhangout_managers }}
       unhangout_email_log_recipients: {{ unhangout_email_log_recipients }}
+      unhangout_domain: {{ unhangout_domain }}
       www_domain: {{ www_domain }}
       ssl_domain: {{ ssl_domain }}
       unhangout_https_port: {{ unhangout_https_port }}
