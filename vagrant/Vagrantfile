@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder "###SALT_DIR###/", "/srv/salt/", owner: "root", group: "root"
   config.vm.synced_folder "###UNHANGOUT_GIT_DIR###/", "/usr/local/node/unhangout/", owner: "root", group: "root"
-  
+
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
