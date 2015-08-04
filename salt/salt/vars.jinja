@@ -26,7 +26,9 @@
 {% set unhangout_domain = salt['pillar.get']('service:unhangout:domain', 'localhost') -%}
 {% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', _default_https_port) -%}
 {% set unhangout_localhost_port = salt['pillar.get']('service:unhangout:localhost_port', _default_https_port) -%}
-{% set unhangout_testing_selenium_version = salt['pillar.get']('service:unhangout:testing:selenium:version', '2.47.1') -%}
+# NOTE: service:unhangout:testing:selenium:version can be set in pillar data,
+# to override the installed version of the standalone server. The default
+# value is declared in service/unhangout/test/init.sls.
 {% set unhangout_testing_selenium_path = salt['pillar.get']('service:unhangout:testing:selenium:path', '/usr/local/lib/selenium-server-standalone.jar') -%}
 {% set unhangout_testing_selenium_verbose = salt['pillar.get']('service:unhangout:testing:selenium:verbose', false) -%}
 {% set unhangout_testing_firefox_bin = salt['pillar.get']('service:unhangout:testing:firefox:bin', '/usr/bin/firefox') -%}
