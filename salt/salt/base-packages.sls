@@ -9,6 +9,7 @@ base-packages:
       - htop
       - lynx
       - man
+      - mailx
       - man-pages
       - man-pages-overrides
       - mutt
