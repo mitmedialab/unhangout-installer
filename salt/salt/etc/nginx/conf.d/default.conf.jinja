@@ -4,7 +4,7 @@ server {
   return 302 https://{{ unhangout_domain }}:{{ unhangout_https_port }}$request_uri;
 }
 
-{% if server_env == 'production' and nginx_https_port != unhangout_https_port -%}
+{% if nginx_https_port != unhangout_https_port -%}
 server {
   listen {{ nginx_https_port }};
   server_name {{ unhangout_domain }};
