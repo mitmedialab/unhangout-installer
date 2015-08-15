@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# chkconfig: - 99 12
+# description: Start apps, monit wrapper.
+#
+# This script uses the monit process to handle starting and stopping a
+# service. This can be used in server configuration management software to
+# manage the service programatically, in the case where it's already being
+# managed via monit.
+
+SERVICE=unhangout-{{ unhangout_domain }}
+PIDFILE=/var/run/${SERVICE}.pid
+
+# Load the function library.
+ . /etc/init.d/functions
+
+RETVAL=0
+
+rh_status() {
+  status -p ${PIDFILE} ${SERVICE}
+}
+
+rh_status_quiet() {
+  rh_status >/dev/null 2>&1
+}
+
+start() {
+  /usr/bin/monit start ${SERVICE}
+}
+
+stop() {
+  /usr/bin/monit stop ${SERVICE}
+}
+
+restart() {
+  stop
+  start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  status)
+    rh_status_quiet
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart|status}"
+    RETVAL=1
+esac
+
+exit $RETVAL
+
+# vi: ft=sh

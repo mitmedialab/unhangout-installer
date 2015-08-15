@@ -193,6 +193,38 @@ npm-bootstrap-{{ unhangout_domain }}:
     - mode: 644
     - require:
       - pkg: monit
+
+/etc/init.d/monit-unhangout-{{ unhangout_domain }}:
+  file:
+    - managed
+    - template: jinja
+    - context:
+      unhangout_domain: {{ unhangout_domain }}
+    - source: salt://etc/init.d/monit-node.jinja
+    - user: root
+    - group: root
+    - mode: 755
+
+monit-unhangout-{{ unhangout_domain }}-service:
+  service:
+    - running
+    - name: monit-unhangout-{{ unhangout_domain }}
+    - enable: False
+    - watch:
+      - pkg: nodejs
+      - {{ unhangout_git_checkout_dependency }}
+      - npm: npm-bootstrap-{{ unhangout_domain }}
+      - cmd: {{ unhangout_domain }}-compile-assets
+      - file: /etc/init.d/unhangout-{{ unhangout_domain }}
+      - file: /etc/init.d/monit-unhangout-{{ unhangout_domain }}
+      - file: /etc/sysconfig/unhangout-{{ unhangout_domain }}
+      - file: /etc/monit.d/unhangout-{{ unhangout_domain }}
+      - file: /usr/local/node/unhangout-{{ unhangout_domain }}/conf.json
+    - require:
+      - file: /usr/local/node/unhangout-{{ unhangout_domain }}
+      - file: /usr/local/node/unhangout-{{ unhangout_domain }}/node_modules/googleapis/.cache
+      - file: /usr/local/node/unhangout-{{ unhangout_domain }}/public/logs/chat
+      - file: /var/log/node/unhangout-{{ unhangout_domain }}
 {% endif -%}
 
 extend:
@@ -200,17 +232,7 @@ extend:
   monit-service:
     service:
       - watch:
-        - pkg: nodejs
-        - {{ unhangout_git_checkout_dependency }}
-        - file: /usr/local/node/unhangout-{{ unhangout_domain }}/conf.json
-        - cmd: {{ unhangout_domain }}-compile-assets
-        - npm: npm-bootstrap-{{ unhangout_domain }}
-        - file: /etc/init.d/unhangout-{{ unhangout_domain }}
-        - file: /etc/sysconfig/unhangout-{{ unhangout_domain }}
         - file: /etc/monit.d/unhangout-{{ unhangout_domain }}
-      - require:
-        - file: /var/log/node/unhangout-{{ unhangout_domain }}
-        - file: /usr/local/node/unhangout-{{ unhangout_domain }}/public/logs/chat
 {% endif %}
   redis-service:
     service:
