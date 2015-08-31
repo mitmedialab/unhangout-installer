@@ -85,7 +85,6 @@ include:
       www_domain: {{ www_domain }}
       ssl_domain: {{ ssl_domain }}
       unhangout_https_port: {{ unhangout_https_port }}
-      unhangout_localhost_port: {{ unhangout_localhost_port }}
       unhangout_hangout_urls_warning: {{ unhangout_hangout_urls_warning }}
       unhangout_custom_css_files: {{ unhangout_custom_css_files }}
       unhangout_custom_facilitator_css_files: {{ unhangout_custom_facilitator_css_files }}
