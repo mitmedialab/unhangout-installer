@@ -26,7 +26,6 @@
 {% set unhangout_email_log_recipients = salt['pillar.get']('service:unhangout:email_log_recipients', []) -%}
 {% set unhangout_domain = salt['pillar.get']('service:unhangout:domain', 'localhost') -%}
 {% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', _default_https_port) -%}
-{% set unhangout_localhost_port = salt['pillar.get']('service:unhangout:localhost_port', _default_https_port) -%}
 # NOTE: service:unhangout:testing:selenium:version can be set in pillar data,
 # to override the installed version of the standalone server. The default
 # value is declared in service/unhangout/test/init.sls.
