@@ -25,16 +25,18 @@ rh_status_quiet() {
 }
 
 start() {
+  echo "Starting ${SERVICE}..."
   /usr/bin/monit start ${SERVICE}
 }
 
 stop() {
+  echo "Stopping ${SERVICE}..."
   /usr/bin/monit stop ${SERVICE}
 }
 
 restart() {
-  stop
-  start
+  echo "Restarting ${SERVICE}..."
+  /usr/bin/monit restart ${SERVICE}
 }
 
 case "$1" in
