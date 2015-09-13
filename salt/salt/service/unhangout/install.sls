@@ -88,9 +88,6 @@ include:
       unhangout_hangout_urls_warning: {{ unhangout_hangout_urls_warning }}
       unhangout_custom_css_files: {{ unhangout_custom_css_files }}
       unhangout_custom_facilitator_css_files: {{ unhangout_custom_facilitator_css_files }}
-      video_server_datacenter_id: {{ video_server_datacenter_id }}
-      video_server_server_id: {{ video_server_server_id }}
-      video_server_host: {{ video_server_host }}
       redis_host: {{ redis_host }}
       redis_port: {{ redis_port }}
       redis_db: {{ redis_db }}

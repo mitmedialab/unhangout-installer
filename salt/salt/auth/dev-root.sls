@@ -8,3 +8,4 @@ sshkey-{{ user }}:
     - name: {{ data.key }}
     - comment: {{ user }}
 {% endfor %}
+

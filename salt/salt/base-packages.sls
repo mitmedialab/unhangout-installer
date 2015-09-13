@@ -27,6 +27,7 @@ base-packages:
       - traceroute
       - unzip
       - vim-enhanced
+      - xorg-x11-xauth
       - yum-plugin-changelog
       - yum-utils
 

@@ -18,7 +18,7 @@
 {% set google_client_id = salt['pillar.get']('service:unhangout:google:client_id', '') -%}
 {% set google_client_secret = salt['pillar.get']('service:unhangout:google:client_secret', '') -%}
 {% set google_project_id = salt['pillar.get']('service:unhangout:google:project_id', '') -%}
-{% set google_spreadsheet_key = salt['pillar.get']('service:unhangout:google:spreadsheet_key', '... google spreadsheet key ...') -%}
+{% set google_spreadsheet_events_key = salt['pillar.get']('service:unhangout:google:spreadsheet:events_key', '... google spreadsheet events key ...') -%}
 {% set unhangout_session_secret = salt['pillar.get']('service:unhangout:session_secret', 'sessionsecret') -%}
 {% set unhangout_server_email_address = salt['pillar.get']('service:unhangout:server_email_address', 'node@yourserver.example.com') -%}
 {% set unhangout_superuser_emails = salt['pillar.get']('service:unhangout:superuser_emails', []) -%}
@@ -26,6 +26,9 @@
 {% set unhangout_email_log_recipients = salt['pillar.get']('service:unhangout:email_log_recipients', []) -%}
 {% set unhangout_domain = salt['pillar.get']('service:unhangout:domain', 'localhost') -%}
 {% set unhangout_https_port = salt['pillar.get']('service:unhangout:https_port', _default_https_port) -%}
+{% set unhangout_hangout_urls_warning = salt['pillar.get']('service:unhangout:hangout_urls_warning', 10) -%}
+{% set unhangout_custom_css_files = salt['pillar.get']('service:unhangout:custom_css_files', []) -%}
+{% set unhangout_custom_facilitator_css_files = salt['pillar.get']('service:unhangout:custom_facilitator_css_files', []) -%}
 # NOTE: service:unhangout:testing:selenium:version can be set in pillar data,
 # to override the installed version of the standalone server. The default
 # value is declared in service/unhangout/test/init.sls.
@@ -33,9 +36,6 @@
 {% set unhangout_testing_selenium_verbose = salt['pillar.get']('service:unhangout:testing:selenium:verbose', false) -%}
 {% set unhangout_testing_firefox_bin = salt['pillar.get']('service:unhangout:testing:firefox:bin', '/usr/bin/firefox') -%}
 {% set unhangout_mandrill_api_key = salt['pillar.get']('service:unhangout:mandrill:api_key', '... mandrill api key ...') -%}
-{% set unhangout_hangout_urls_warning = salt['pillar.get']('service:unhangout:hangout_urls_warning', 10) -%}
-{% set unhangout_custom_css_files = salt['pillar.get']('service:unhangout:custom_css_files', []) -%}
-{% set unhangout_custom_facilitator_css_files = salt['pillar.get']('service:unhangout:custom_facilitator_css_files', []) -%}
 
 # Unhangout server configuration.
 # The node.js environment to run under, can be one of 'testing', 'production'.
@@ -76,7 +76,7 @@
 # URL of the database host.
 {% set redis_host = salt['pillar.get']('service:redis:host', '127.0.0.1') -%}
 # Port of the database host.
-{% set redis_port = salt['pillar.get']('service:redis:host', '6379') -%}
+{% set redis_port = salt['pillar.get']('service:redis:port', '6379') -%}
 # Database to write to on the database host.
 {% set redis_db = salt['pillar.get']('service:redis:db', '0') -%}
 
