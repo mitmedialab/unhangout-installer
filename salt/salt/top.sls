@@ -34,6 +34,12 @@ base:
     - service.nodejs
     - service.npm
     - service.unhangout
+{% if server_env == 'development' %}
+    - service.unhangout.test
+{% endif %}
+{% if server_env == 'production' %}
+    - service.unhangout.autofarm
+{% endif %}
     - misc
 {% if custom_init_file %}
     - custom
