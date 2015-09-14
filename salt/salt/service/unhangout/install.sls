@@ -74,8 +74,6 @@ include:
       google_client_secret: {{ google_client_secret }}
       google_project_id: {{ google_project_id }}
       google_spreadsheet_events_key: {{ google_spreadsheet_events_key }}
-      google_spreadsheet_session_templates_key: {{ google_spreadsheet_session_templates_key }}
-      google_spreadsheet_session_message_templates_key: {{ google_spreadsheet_session_message_templates_key }}
       unhangout_session_secret: {{ unhangout_session_secret }}
       unhangout_server_email_address: {{ unhangout_server_email_address }}
       unhangout_superuser_emails: {{ unhangout_superuser_emails }}
