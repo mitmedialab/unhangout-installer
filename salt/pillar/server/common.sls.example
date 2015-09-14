@@ -17,3 +17,10 @@
 #      - bang@example.com
 #    email_log_recipients:
 #      - foo@example.com
+#    google:
+#      spreadsheet:
+#        events_key: your-google-spreadsheet-id
+#    custom_css_files:
+#      - /public/css/screen-custom.css
+#    custom_facilitator_css_files:
+#      - /public/css/facilitator-custom.css

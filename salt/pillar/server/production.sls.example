@@ -13,9 +13,10 @@
 #      project_id: '178484982271'
 #    node_env: 'production'
 #    domain: 'unhangout.example.com'
-#    git:
-#      url: https://github.com/somegithubuser/unhangout.git
-#      branch: master
+#    farming:
+#      email: yourautofarm-email@google.com
+#      password: yourpassword
+#      count: 20
 #  nginx:
 #    # If this value is provided, further configuration is necessary. See
 #    # salt/vars.jinja for more info.

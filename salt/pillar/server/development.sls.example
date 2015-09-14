@@ -15,7 +15,7 @@
 #      # This project should work for localhost installs running on HTTPS port
 #      # 7778.
 #      project_id: '650862887364'
-
+#    hangout_urls_warning: 0
 
 # Add SSH public keys here for users you wish to have root access to the server.
 #ssh:
