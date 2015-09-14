@@ -42,7 +42,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   config.vm.provision :salt do |salt|
     salt.install_master = false
-    salt.install_type = "stable"
+    salt.install_type = "git"
+    salt.install_args = "v2014.7.6"
     salt.minion_config = "salt/minion"
     salt.log_level = "info"
     salt.verbose = true
