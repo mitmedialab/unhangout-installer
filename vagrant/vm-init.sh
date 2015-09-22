@@ -73,9 +73,6 @@ elif [ -d ${VAGRANT_CONFIG_DIR}/salt ]; then
   rsync -avz --progress ${VAGRANT_CONFIG_DIR}/salt .
 fi
 
-echo "Temporarily uninstalling vagrant-vbguest plugin (if necessary)..."
-vagrant plugin uninstall vagrant-vbguest
-
 echo "Booting server..."
 vagrant up --no-provision
 
@@ -85,7 +82,12 @@ echo "Updating server kernel..."
 vagrant ssh -- "sudo yum clean all"
 vagrant ssh -- "sudo yum -y update kernel*"
 
+vagrant plugin install vagrant-hostsupdater
 vagrant plugin install vagrant-vbguest
+
+echo "Activating vagrant-vbguest plugin..."
+sed -i.bak "s/config\.vbguest\.auto_update = false$/config.vbguest.auto_update = true/" Vagrantfile
+rm Vagrantfile.bak
 
 # Reloading here allows the vagrant-vbguest plugin to handle its job before
 # the rest of the install.

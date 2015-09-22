@@ -12,6 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "bento/centos-6.7"
 
+  # In case the vagrant-vbguest plugin is installed.
+  config.vbguest && config.vbguest.auto_update = false
+
   # Share SSH locally by default
   config.vm.network :forwarded_port,
     guest: 22,
