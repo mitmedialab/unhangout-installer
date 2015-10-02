@@ -17,13 +17,3 @@
 #      project_id: '650862887364'
 #    hangout_urls_warning: 0
 
-# Add SSH public keys here for users you wish to have root access to the server.
-#ssh:
-#  pubkeys:
-#    root:
-#      foo@example.com:
-#        key: somesshpubkey
-#        # For details on this setting, see
-#        # http://docs.saltstack.com/en/latest/ref/states/all/salt.states.ssh_auth.html#salt.states.ssh_auth.present
-#        # Default is ssh-rsa.
-#        enc: ssh-rsa
