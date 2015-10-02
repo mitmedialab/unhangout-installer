@@ -44,6 +44,34 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # TODO: Remove this when https://github.com/mitchellh/vagrant/issues/5973 is fixed.
   config.vm.provision "shell", inline: "sudo mkdir -p /etc/salt && sudo cp /vagrant/salt/minion /etc/salt/"
 
+  # This is a hack to load an SSH pubkey to the server if a valid one is found
+  # on the host. Looks in the default location for RSA/DSA pubkeys.
+  # NOTE: Should probably be rewritten as a vagrant plugin in the future.
+  config.vm.provision "shell" do |s|
+    ssh_dir = "#{Dir.home}/.ssh"
+    ssh_pub_key_file = ""
+    if File.readable?("#{ssh_dir}/id_rsa.pub") then
+      ssh_pub_key_file = "#{ssh_dir}/id_rsa.pub"
+    elsif File.readable?("#{ssh_dir}/id_dsa.pub") then
+      ssh_pub_key_file = "#{ssh_dir}/id_dsa.pub"
+    end
+    if not ssh_pub_key_file.empty? then
+      ssh_pub_key = File.readlines(ssh_pub_key_file).first.strip
+      s.inline = <<-SHELL
+        echo "Adding #{ssh_pub_key_file} to root and vagrant users authorized_keys file."
+        echo "#{ssh_pub_key}" >> /home/vagrant/.ssh/authorized_keys
+        sudo mkdir -p /root/.ssh
+        sudo chown root:root /root/.ssh
+        sudo chmod 700 /root/.ssh
+        echo "#{ssh_pub_key}" | sudo tee -a /root/.ssh/authorized_keys
+      SHELL
+    else
+      s.inline = <<-SHELL
+        echo "No SSH pubkey found, for direct SSH access, one will need to be added to the VM."
+      SHELL
+    end
+  end
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   config.vm.provision :salt do |salt|

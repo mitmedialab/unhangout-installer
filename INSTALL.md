@@ -17,15 +17,17 @@ Installation is fairly straightforward:
 
 ## Development setup with Vagrant
 
+ * Install an SSH keypair on the host machine if one doesn't exist already.
  * Install [Git](http://git-scm.com), [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org). OS X [Homebrew](http://brew.sh) users, consider easy installation via [Homebrew Cask](http://caskroom.io). *NOTE:* VirtualBox 5.x appears to have some issues creating symlinks. Until this issue is resolved, recommend to install the latest 4.3.x version (Homebrew Cask users can use [homebrew-cask-versions](https://github.com/caskroom/homebrew-versions)).
+ * Run the following command to checkout this project: ```git clone https://github.com/unhangout/unhangout-installer.git```
  * From the command line, change to the <code>vagrant</code> directory, and you'll find <code>settings.sh.example</code>. Copy that file in the same directory to <code>settings.sh</code>.
  * Edit to taste, the default values will most likely work just fine.
  * From the command line, run <code>./development-environment-init.sh</code>.
  * Once the script successfully completes the pre-flight checks, it will automatically handle the rest of the installation and setup. Relax, grab a cup of chai, and watch the setup process roll by on screen. :)
  * After script completion, run <code>./manage-vm.sh start</code>.
  * Visit <code>https://localhost:7778</code> in your browser, and you should see the main page for the Unhangout software.
- * The setup script outputs optional configuration you can add to your .ssh/config file, to enable easy root SSH access to the server if you configured an SSH pubkey as above.
- * The installed virtual machine can be controlled like any other Vagrant VM. See [this Vagrant cheat sheet](http://notes.jerzygangi.com/vagrant-cheat-sheet) for more details. 
+ * If the setup script finds an SSH pubkey in the default location of the host's HOME directory, it will automatically install that pubkey to the VM. The end of the script outputs optional configuration you can add to your .ssh/config file, to enable easy root SSH access to the server.
+ * The installed virtual machine can be controlled like any other Vagrant VM. See [this Vagrant cheat sheet](http://notes.jerzygangi.com/vagrant-cheat-sheet) for more details.
  * If for any reason the installation fails, or you just want to completely remove the installed virtual machine, run the <code>vagrant/kill-development-environment.sh</code> script from the command line.
 
 ## Production setup
