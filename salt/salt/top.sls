@@ -21,7 +21,7 @@ base:
     - base-packages
     - service.network
     - service.firewall
-    - auth.dev-root
+    - auth
     - service.ssh
     - base
     - selinux

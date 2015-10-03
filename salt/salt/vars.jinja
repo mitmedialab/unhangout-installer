@@ -60,6 +60,8 @@
 # SSH.
 # Port to run the SSH daemon on.
 {% set sshd_port = salt['pillar.get']('service:sshd:port', 22) -%}
+# SSH public keys to place in /root/authorized_keys.
+{% set ssh_pubkeys_root = salt['pillar.get']('ssh:pubkeys:root', {}) -%}
 
 # Nginx.
 # HTTP port to listen on.
