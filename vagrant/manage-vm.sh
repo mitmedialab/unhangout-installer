@@ -36,7 +36,7 @@ if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
 fi
 
 start() {
-  vagrant up && vagrant ssh -- "sudo service unhangout-${UNHANGOUT_DOMAIN} start"
+  vagrant up
   RETVAL=$?
 }
 

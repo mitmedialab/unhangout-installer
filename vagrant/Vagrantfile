@@ -80,4 +80,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.verbose = true
     salt.run_highstate = true
   end
+
+  # The Unhangout service cannot be started until the shared folders are
+  # mounted, this executes on boot and after mounting.
+  config.vm.provision :shell, run: "always" do |s|
+    s.inline = "sudo service unhangout-###UNHANGOUT_DOMAIN### start"
+  end
+
 end
