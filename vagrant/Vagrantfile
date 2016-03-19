@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :salt do |salt|
     salt.install_master = false
     salt.install_type = "git"
-    salt.install_args = "v2015.8.3"
+    salt.install_args = "v2015.8.7"
     salt.minion_config = "salt/minion"
     salt.log_level = "info"
     salt.verbose = true
