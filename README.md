@@ -1,3 +1,11 @@
+# Repository moved
+
+This is code for provisioning an older, unmaintained version of [Unhangout](https://unhangout.media.mit.edu).  The current code for provisioning Unhangout is found [in the new repository](https://gitlab.com/unhangout/reunhangout/tree/master/ansible)
+
+This code is kept here only for historical interest.
+
+--------
+
 # Overview
 
 This project attempts to ease the installation and configuration of the [Unhangout](https://unhangout.media.mit.edu) online un-conference style conferencing software. After running the installation, users should have a fully-functioning [Unhangout codebase](https://github.com/drewww/unhangout) up and running on their server.
